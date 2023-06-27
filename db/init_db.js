@@ -120,9 +120,10 @@ async function rebuildDB() {
     console.log("Error during rebuildDB")
     throw error
   }
-}
+
 module.exports = {
   rebuildDB,
   dropTables,
   createTables,
 }
+
