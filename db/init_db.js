@@ -1,27 +1,23 @@
 const {
   client,
-  // declare your model imports here
-  // for example, User
+ 
 } = require('./');
-
+const{createUser} = require("./models/user")
 async function dropTables() {
   try {
     client.connect();
     console.log('Dropping All Tables...');
 
     await client.query(`
-        DROP TABLE IF EXISTS cart_item;
-        DROP TABLE IF EXISTS carts;
-        DROP TABLE IF EXISTS products;
-        DROP TABLE IF EXISTS users;
+      DROP TABLE IF EXISTS cartItem;
+      DROP TABLE IF EXISTS carts;
+      DROP TABLE IF EXISTS products;
+      DROP TABLE IF EXISTS users;
     `);
-    // drop tables in correct order
-    //add in CASCADE if trouble
 
-    // build tables in correct order
     console.log("Finished dropping tables!");
   } catch (error) {
-    console.error('ERROR Dropping Tables!!!',error);
+    console.error('ERROR Dropping Tables!!!', error);
     throw error;
   }
 }
@@ -72,13 +68,43 @@ async function createTables() {
 };
 
 
-async function populateInitialData() {
+async function createInitialUsers() {
   try {
-    // create useful starting data by leveraging your
-    // Model.method() adapters to seed your db, for example:
-    // const user1 = await User.createUser({ ...user info goes here... })
+    const usersToCreate =[
+      {username:"albert", password:"bertie99", email:"bert@gmail.com"},
+      { username: "sandra", password: "sandra123", email:"sandra@gmail.com" },
+      { username: "glamgal", password: "glamgal123", email:"glamgal@gmail.com"},
+    ]
+    const users= await Promise.all(usersToCreate.map(createUser))
+
+    console.log("Users Create:")
+    console.log(users)
+
   } catch (error) {
+    console.log("Error creating users!")
     throw error;
+  }
+}
+
+async function createInitialProducts(){
+  try{
+
+  }catch(error){
+    throw error
+  }
+}
+async function createInitialCarts(){
+  try{
+
+  }catch(error){
+    throw error
+  }
+}
+async function createInitialCartItem(){
+  try{
+
+  }catch(error){
+    throw error
   }
 }
 
@@ -87,11 +113,17 @@ async function rebuildDB() {
     await dropTables()
     await createTables()
     await createInitialUsers()
-    await createInitialProducts()
-    await createInitialCarts()
-    await createInitialCartItem()
+    // await createInitialProducts()
+    // await createInitialCarts()
+    // await createInitialCartItem()
   } catch (error) {
     console.log("Error during rebuildDB")
     throw error
   }
+
+module.exports = {
+  rebuildDB,
+  dropTables,
+  createTables,
 }
+
