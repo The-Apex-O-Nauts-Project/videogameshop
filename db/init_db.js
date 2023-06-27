@@ -1,8 +1,9 @@
 const {
   client,
- 
+  createUser,
+  createProduct,
 } = require('./');
-const{createUser} = require("./models/user")
+//const{createUser} = require("./models/user")
 async function dropTables() {
   try {
     client.connect();
@@ -88,7 +89,28 @@ async function createInitialUsers() {
 
 async function createInitialProducts(){
   try{
+  const productsToCreate=[
+    {name:"Destiny 2", 
+    description:"Really fun game you should play", 
+    price: 0, 
+    photourl:"", 
+    tags:["Shooter", "Action"]},
+    {name:"Mass-Effect", 
+      description:"Really fun game you should play", 
+      price: 60,
+      photourl:"",
+      tags:["Action", "Shooter"]},
+    {name:"TitanFall 2", 
+      description:"Really fun game you should play ", 
+      price: 60, 
+      photourl:"", 
+      tags:["Action","Shooter"]}
 
+  ]
+  const products = await Promise.all(productsToCreate.map(createProduct))
+  
+  console.log("Products created:")
+  console.log(products)
   }catch(error){
     throw error
   }
@@ -113,7 +135,7 @@ async function rebuildDB() {
     await dropTables()
     await createTables()
     await createInitialUsers()
-    // await createInitialProducts()
+    await createInitialProducts()
     // await createInitialCarts()
     // await createInitialCartItem()
   } catch (error) {
