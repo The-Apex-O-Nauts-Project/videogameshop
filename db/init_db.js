@@ -95,8 +95,3 @@ async function rebuildDB() {
     throw error
   }
 }
-
-buildTables()
-  .then(populateInitialData)
-  .catch(console.error)
-  .finally(() => client.end());
