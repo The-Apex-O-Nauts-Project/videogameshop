@@ -3,15 +3,15 @@ const client = require('../client');
 
 // add your database adapter fns here
 
-async function createUser({username, password, email}){
+async function createUser({username, password, email, isAdmin}){
 
   try{
     const {rows:[user]}= await client.query(`
-    INSERT INTO users(username, password, email)
-    VALUES ($1, $2, $3)
+    INSERT INTO users(username, password, email, isAdmin)
+    VALUES ($1, $2, $3, $4)
     ON CONFLICT (username) DO NOTHING
-    RETURNING id, username, email
-    `, [username, password, email])
+    RETURNING id, username, email, isAdmin
+    `, [username, password, email, isAdmin])
 
     return user
   }catch(err){

@@ -2,6 +2,8 @@ const {
   client,
   createUser,
   createProduct,
+  createCart,
+  createCartItem,
 } = require('./');
 //const{createUser} = require("./models/user")
 async function dropTables() {
@@ -72,9 +74,12 @@ async function createTables() {
 async function createInitialUsers() {
   try {
     const usersToCreate =[
-      {username:"albert", password:"bertie99", email:"bert@gmail.com"},
-      { username: "sandra", password: "sandra123", email:"sandra@gmail.com" },
-      { username: "glamgal", password: "glamgal123", email:"glamgal@gmail.com"},
+      {username:"albert", password:"bertie99", 
+      email:"bert@gmail.com", isAdmin: true},
+      { username: "sandra", password: "sandra123", 
+      email:"sandra@gmail.com", isAdmin: true },
+      { username: "glamgal", password: "glamgal123", 
+      email:"glamgal@gmail.com", isAdmin: false},
     ]
     const users= await Promise.all(usersToCreate.map(createUser))
 
@@ -117,14 +122,29 @@ async function createInitialProducts(){
 }
 async function createInitialCarts(){
   try{
+    const cartsToCreate=[
+      {userId: 1, total: 120},
+      {userId:2, total:60},
+      {userId:3, total:45}
+    ]
+    const carts = await Promise.all(cartsToCreate.map(createCart))
 
+    console.log("Cart created:") 
+    console.log(carts)
   }catch(error){
     throw error
   }
 }
 async function createInitialCartItem(){
   try{
-
+    const cartItemToCreate = [
+      {productId : 1, quantity: 2, cartsId: 1},
+      {productId: 2, quantity: 1, cartsId: 2},
+      {productId: 3, quantity: 1, cartsId: 3}
+    ]
+    const cartItem = await Promise.all(cartItemToCreate.map(createCartItem))
+    console.log("Cart Item created:")
+    console.log(cartItem)
   }catch(error){
     throw error
   }
@@ -136,13 +156,13 @@ async function rebuildDB() {
     await createTables()
     await createInitialUsers()
     await createInitialProducts()
-    // await createInitialCarts()
-    // await createInitialCartItem()
+    await createInitialCarts()
+    await createInitialCartItem()
   } catch (error) {
     console.log("Error during rebuildDB")
     throw error
   }
-
+}
 module.exports = {
   rebuildDB,
   dropTables,
