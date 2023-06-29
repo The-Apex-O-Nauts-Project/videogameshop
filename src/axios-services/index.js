@@ -1,4 +1,4 @@
-import axios from 'axios';
+
 
 // this file holds your frontend network request adapters
 // think about each function as a service that provides data
@@ -9,7 +9,7 @@ import axios from 'axios';
 
 export async function getUsers() {
     try {
-      const { data: users } = await axios.get('/api/users')
+      const { data: users } = await router.get('/api/users')
       return users;
     } catch(err) {
       console.error(err)

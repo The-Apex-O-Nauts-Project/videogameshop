@@ -9,12 +9,12 @@ async function createUser({username, password, email, isAdmin}){
   const hashedPassword = await bcrypt.hash(password, SALT_COUNT)
 
   try{
-    const {rows:[user]}= await client.query(`
-    INSERT INTO users(username, password, email, isAdmin)
+    const {rows:[user]}= await client.query(
+    `INSERT INTO users(username, password, email, isAdmin)
     VALUES ($1, $2, $3, $4)
     ON CONFLICT (username) DO NOTHING
-    RETURNING id, username, email, isAdmin
-    `, [username, hashedPassword, email, isAdmin])
+    RETURNING id, username, email, isAdmin;`
+    , [username, hashedPassword, email, isAdmin])
 
     return user
   }catch(err){
@@ -26,7 +26,7 @@ async function getAllUsers() {
   try{
     const {rows: users} = await client.query(`
     SELECT *
-    FROM users
+    FROM users;
     `)
     return users
   }catch(err){
@@ -56,7 +56,7 @@ async function getUserById(userId){
     const {row:[user]}= await client.query(`
       SELECT id, username
       FROM users
-      WHERE id=${userId}
+      WHERE id=${userId};
 
     `)
     if(!user){
@@ -72,7 +72,7 @@ async function getUserByUsername(username){
     const {rows:[user]}= await client.query(`
       SELECT *
       FROM users
-      WHERE username = $1
+      WHERE username = $1;
     `, [username])
   }catch(err){
     throw err
@@ -84,5 +84,5 @@ createUser,
 getAllUsers,
 getUser,
 getUserById,
-getUserByUsername
+getUserByUsername,
 };

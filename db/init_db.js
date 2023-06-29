@@ -5,7 +5,7 @@ const {
   createCart,
   createCartItem,
 } = require('./');
-//const{createUser} = require("./models/user")
+
 async function dropTables() {
   try {
     client.connect();
@@ -98,17 +98,17 @@ async function createInitialProducts(){
     {name:"Destiny 2", 
     description:"Really fun game you should play", 
     price: 0, 
-    photourl:"", 
+    photourl:"dsfsgadf", 
     tags:["Shooter", "Action"]},
     {name:"Mass-Effect", 
       description:"Really fun game you should play", 
       price: 60,
-      photourl:"",
+      photourl:"sadfasf",
       tags:["Action", "Shooter"]},
     {name:"TitanFall 2", 
       description:"Really fun game you should play ", 
       price: 60, 
-      photourl:"", 
+      photourl:"adfasf", 
       tags:["Action","Shooter"]}
 
   ]
