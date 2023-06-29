@@ -36,7 +36,8 @@ async function getAllProductByTag({tags}){
         const {rows:productTag}= await client.query(`
         SELECT *
         FROM products
-        WHERE ${tags} = ANY tags;
+        WHERE ${tags} 
+        IN tags;
         `)
         return productTag
     }catch(err){
@@ -47,7 +48,7 @@ async function getAllProductByTag({tags}){
 //========Get A Product By Name========
 async function getAllProductByName({name}){
     try{
-        
+
     }catch(err){
         console.error("there was an error getAllProductByName", err)
         throw err
