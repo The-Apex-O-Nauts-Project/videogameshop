@@ -5,7 +5,7 @@ const {
   createCart,
   createCartItem,
 } = require('./');
-//const{createUser} = require("./models/user")
+
 async function dropTables() {
   try {
     client.connect();
@@ -48,6 +48,9 @@ async function createTables() {
         tags TEXT NOT NULL
         );
         
+        CREATE TABLE tags(
+          id SERIAL PRIMARY KEY,
+        )
         CREATE TABLE carts (
         id SERIAL PRIMARY KEY,
         "usersId" INTEGER REFERENCES users(id),
@@ -98,18 +101,18 @@ async function createInitialProducts(){
     {name:"Destiny 2", 
     description:"Really fun game you should play", 
     price: 0, 
-    photourl:"", 
-    tags:["Shooter", "Action"]},
+    photourl:"dsfsgadf", 
+    tags:["Action"]},
     {name:"Mass-Effect", 
       description:"Really fun game you should play", 
       price: 60,
-      photourl:"",
-      tags:["Action", "Shooter"]},
+      photourl:"sadfasf",
+      tags:[ "Shooter"]},
     {name:"TitanFall 2", 
       description:"Really fun game you should play ", 
       price: 60, 
-      photourl:"", 
-      tags:["Action","Shooter"]}
+      photourl:"adfasf", 
+      tags:["Shooter"]}
 
   ]
   const products = await Promise.all(productsToCreate.map(createProduct))
