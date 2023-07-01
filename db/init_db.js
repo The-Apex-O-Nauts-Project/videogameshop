@@ -45,12 +45,9 @@ async function createTables() {
         description TEXT NOT NULL,
         price INTEGER,
         photourl TEXT NOT NULL,
-        tags TEXT NOT NULL
+        category TEXT NOT NULL
         );
         
-        CREATE TABLE tags(
-          id SERIAL PRIMARY KEY,
-        )
         CREATE TABLE carts (
         id SERIAL PRIMARY KEY,
         "usersId" INTEGER REFERENCES users(id),
@@ -102,17 +99,17 @@ async function createInitialProducts(){
     description:"Really fun game you should play", 
     price: 0, 
     photourl:"dsfsgadf", 
-    tags:["Action"]},
+    category:["Action"]},
     {name:"Mass-Effect", 
       description:"Really fun game you should play", 
       price: 60,
       photourl:"sadfasf",
-      tags:[ "Shooter"]},
+      category:[ "Shooter"]},
     {name:"TitanFall 2", 
       description:"Really fun game you should play ", 
       price: 60, 
       photourl:"adfasf", 
-      tags:["Shooter"]}
+      category:["Shooter"]}
 
   ]
   const products = await Promise.all(productsToCreate.map(createProduct))
