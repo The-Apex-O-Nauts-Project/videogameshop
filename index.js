@@ -1,4 +1,5 @@
 // This is the Web Server
+require('dotenv').config();
 const express = require('express');
 const server = express();
 
@@ -19,18 +20,31 @@ const path = require('path');
 server.use(express.static(path.join(__dirname, 'build')));
 
 // here's our API
-server.use('/api', require('./api'));
+const apiRouter = require('./api');
+server.use('/api', apiRouter);
+//server.use('/api', require('./api'));
+
+server.use((req, res, next) => {
+  console.log("<____Body Logger START____>");
+  console.log(req.body);
+  console.log("<_____Body Logger END_____>");
+  next();
+});
+
+
+
 
 // by default serve up the react app if we don't recognize the route
-server.use((req, res, next) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
+// server.use((req, res, next) => {
+//   res.sendFile(path.join(__dirname, 'build', 'index.html'));
+// });
 
 // bring in the DB connection
 const { client } = require('./db');
 
+
 // connect to the server
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT 
 
 // define a server handle to close open tcp connection after unit tests have run
 const handle = server.listen(PORT, async () => {

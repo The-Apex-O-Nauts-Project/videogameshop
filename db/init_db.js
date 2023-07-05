@@ -1,9 +1,19 @@
+
+
+
 const {
   client,
+  getUser,
+  getUserById,
+  getAllUsers,
   createUser,
   createProduct,
-  createCart,
-  createCartItem,
+  addItemToCart,
+  getUserAndCart,
+  createCartInventory,
+  getAllProductByTag,
+  getAllProductByName
+
 } = require('./');
 
 async function dropTables() {
@@ -13,7 +23,7 @@ async function dropTables() {
 
     await client.query(`
       DROP TABLE IF EXISTS cartItem;
-      DROP TABLE IF EXISTS carts;
+      DROP TABLE IF EXISTS cart;
       DROP TABLE IF EXISTS products;
       DROP TABLE IF EXISTS users;
     `);
@@ -23,7 +33,7 @@ async function dropTables() {
     console.error('ERROR Dropping Tables!!!', error);
     throw error;
   }
-}
+};
 
 async function createTables() {
   try {
@@ -35,7 +45,7 @@ async function createTables() {
         id SERIAL PRIMARY KEY,
         username VARCHAR(255) UNIQUE NOT NULL,
         password VARCHAR(255) NOT NULL,
-        email VARCHAR(255) UNIQUE NOT NULL,
+        email VARCHAR(255) UNIQUE ,
         isAdmin BOOLEAN
         );
       
@@ -48,18 +58,21 @@ async function createTables() {
         category TEXT NOT NULL
         );
         
-        CREATE TABLE carts (
+        CREATE TABLE cart (
         id SERIAL PRIMARY KEY,
-        "usersId" INTEGER REFERENCES users(id),
-        total INTEGER
+         quantity INTEGER,
+         total INTEGER,
+        "cartUserId" INTEGER REFERENCES users(id),
+        "productsId" INTEGER REFERENCES products(id)
         );
      
         CREATE TABLE cartItem (
         id SERIAL PRIMARY KEY,
+        "cartOwnerId" INTEGER REFERENCES users(id),
         "productId" INTEGER REFERENCES products(id),
-        "cartsId" INTEGER REFERENCES carts(id),
+        "cartId" INTEGER REFERENCES cart(id),
         quantity INTEGER,
-        UNIQUE ("cartsId", "productId")
+        UNIQUE ("cartOwnerId","cartId", "productId")
         );  
     `);
 
@@ -90,7 +103,7 @@ async function createInitialUsers() {
     console.log("Error creating users!")
     throw error;
   }
-}
+};
 
 async function createInitialProducts(){
   try{
@@ -119,36 +132,37 @@ async function createInitialProducts(){
   }catch(error){
     throw error
   }
-}
+};
 async function createInitialCarts(){
   try{
     const cartsToCreate=[
-      {userId: 1, total: 120},
-      {userId:2, total:60},
-      {userId:3, total:45}
+      {quantity: 2, total: 120, userId: 1, productId: 1},
+      {quantity: 5, total: 14, userId: 1, productId: 3},
+      
+      
     ]
-    const carts = await Promise.all(cartsToCreate.map(createCart))
+    const carts = await Promise.all(cartsToCreate.map(createCartInventory))
 
     console.log("Cart created:") 
     console.log(carts)
   }catch(error){
     throw error
   }
-}
-async function createInitialCartItem(){
-  try{
-    const cartItemToCreate = [
-      {productId : 1, quantity: 2, cartsId: 1},
-      {productId: 2, quantity: 1, cartsId: 2},
-      {productId: 3, quantity: 1, cartsId: 3}
-    ]
-    const cartItem = await Promise.all(cartItemToCreate.map(createCartItem))
-    console.log("Cart Item created:")
-    console.log(cartItem)
-  }catch(error){
-    throw error
-  }
-}
+};
+// async function createInitialCartItem(){
+//   try{
+//     const cartItemToCreate = [
+//       {productId : 1, quantity: 2, cartId: 1},
+//       {productId: 2, quantity: 1, cartId: 2},
+//       {productId: 3, quantity: 1, cartId: 3}
+//     ]
+//     const cartItem = await Promise.all(cartItemToCreate.map(createCartInventory))
+//     console.log("Cart Item created:")
+//     console.log(cartItem)
+//   }catch(error){
+//     throw error
+//   }
+// }
 
 async function rebuildDB() {
   try {
@@ -157,15 +171,40 @@ async function rebuildDB() {
     await createInitialUsers()
     await createInitialProducts()
     await createInitialCarts()
-    await createInitialCartItem()
+   // await createInitialCartItem()
+
+
+   await addItemToCart(1,3,2,2)
+    await addItemToCart(3,4,1,3)
+    await addItemToCart(1,3,2,1)
+    await addItemToCart(1,4,2,1)
+    await addItemToCart(1,3,2,2)
+
+    const cartUser = await getUserAndCart();
+    console.log("cartuser", cartUser)
+
+    const getAUSER = await getAllUsers();
+    console.log("getAUSER", getAUSER);
+
+    const getAUSERBYID = await getUserById(1);
+    console.log("getAUSERBYID", getAUSERBYID);
+
+    const getProdId = await getAllProductByTag(1);
+    console.log("getProdId", getProdId);
+
+    const getProdName = await getAllProductByName("Destiny 2");
+    console.log("getProdName", getProdName);
+
+
+
   } catch (error) {
     console.log("Error during rebuildDB")
     throw error
   }
-}
+};
 module.exports = {
   rebuildDB,
   dropTables,
   createTables,
-}
-
+  client
+};

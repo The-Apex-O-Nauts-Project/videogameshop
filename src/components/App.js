@@ -14,7 +14,7 @@ const App = () => {
 
   return (
     <div className="app-container">
-      <h1></h1>
+      <h1>OTTERS FROLICKING</h1>
       <p></p>
     </div>
   );
