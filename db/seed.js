@@ -1,5 +1,7 @@
 const client = require('./client');
-const { rebuildDB } = require('./init_db');
+const { rebuildDB} = require('./init_db');
+//console.log(client)
+
 
 rebuildDB()
   .catch(console.error)
