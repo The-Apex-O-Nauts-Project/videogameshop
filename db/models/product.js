@@ -24,7 +24,7 @@ async function getAllProducts(){
         `);
         return products
     }catch(err){
-        console.error("There was an error getting all products",err)
+        console.error("There was an error getting all products",err);
         throw err;
     }
 }

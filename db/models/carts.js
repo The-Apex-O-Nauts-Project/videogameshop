@@ -2,6 +2,7 @@ const client = require("../client")
 
 
 //==================CREATE CART=================
+
   const createCartInventory = async (cartItem) => {
     const { quantity, total, cartUserId, productsId } = cartItem;
     try{
@@ -13,14 +14,15 @@ const client = require("../client")
         
       console.log(cartItem);
         return cartItem;
-    }catch (error) {
+    }catch (err) {
         console.log('ERROR CREATING Cart Item!!!!');
-       console.error(error)
+       console.error(err)
     }
-
+   
 };
 
 //==================ADD ITEM TO CART=================
+
   const addItemToCart = async ( quantity, total, cartUserId,productsId) =>{
     try {
   await client.query(`
@@ -29,11 +31,14 @@ const client = require("../client")
         RETURNING*;
       `, [quantity,total,cartUserId,productsId]);
   
-    } catch (error) {
+    } catch (err) {
     console.log('ERROR ADDING ITEM TO CART!!!!');
+    console.error(err)
     }
   };
+
    //==================GET USER AND CART CHECK OUT ????=================
+
   const getUserAndCart = async (userId) => {
     try{
       const { rows } = await client.query(`
@@ -44,9 +49,9 @@ const client = require("../client")
       `);
     
       return rows;
-    }catch(ex){
+    }catch(err){
       console.log('ERROR GETTING Users and cart!!!');
-      //console.log(ex.error)
+      console.error(err)
     }
   };
   
@@ -61,9 +66,9 @@ const client = require("../client")
     `, [id]);
 
       return cart;
-    }catch(ex){
+    }catch(err){
       console.error('ERROR GETTING Cart by Id!!!');
-      //console.log(ex.error)
+      console.error(err)
     }
   };
 
@@ -80,7 +85,7 @@ const client = require("../client")
       return cart;
     }catch(ex){
       console.error('ERROR GETTING Cart by User Id!!!');
-      //console.log(ex.error)
+     console.error(err);
     }   
   };
 
@@ -94,12 +99,13 @@ const client = require("../client")
     `);
     
       return cart;
-    }catch(ex){
+    }catch(err){
       console.error('ERROR GETTING All Carts!!!');
-      //console.log(ex.error)
+      console.error(err);
     }
   };
   //===================GET CART USER BY NAME=================
+  
   const getCartUserByName = async (name) => {
     try{
       const { rows: [ cart ] } = await client.query(`
@@ -109,9 +115,9 @@ const client = require("../client")
     `, [name]);
 
       return cart;
-    }catch(ex){
+    }catch(err){
       console.error('ERROR GETTING Cart by User Id!!!');
-      //console.log(ex.error)
+      console.error(err);
     }
   };
 
@@ -128,9 +134,9 @@ const client = require("../client")
     return cart;
       
       return cart;
-    }catch(ex){
+    }catch(err){
       console.error('ERROR DELETING Cart by User Id!!!');
-      //console.log(ex.error)
+      console.error(err);
     }
   };
 
@@ -148,7 +154,7 @@ const client = require("../client")
       return cart;
     }catch(ex){
       console.error('ERROR UPDATING Cart!!!');
-      //console.log(ex.error)
+      console.error(err);
     }
   };
 
