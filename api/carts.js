@@ -130,7 +130,7 @@ cartsRouter.delete("/deletecart/:userId", async (req, res, next) => {
     next();
 });
 
-//================UPDATE CART===============
+//================UPDATE CART==================
 cartsRouter.patch("/updatecart/:cartId", async (req, res, next) => {
     console.log("UPDATE CART ROUTE")
     const {cartId} = req.params;
