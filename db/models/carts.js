@@ -132,8 +132,6 @@ const client = require("../client")
     `, [userId]);
 
     return cart;
-      
-      return cart;
     }catch(err){
       console.error('ERROR DELETING Cart by User Id!!!');
       console.error(err);

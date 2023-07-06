@@ -16,7 +16,7 @@ async function createUser({username, password, email, isAdmin}){
     VALUES ($1, $2, $3, $4)
     ON CONFLICT (username) DO NOTHING
     RETURNING id, username, email, isAdmin;`
-    , [username, password, email, isAdmin])
+    , [username, hashedPassword, email, isAdmin])
 
     return user
   }catch(err){
@@ -40,17 +40,18 @@ async function getAllUsers() {
 //==============GET USER================
 
 
-async function getUser(user){
-  const {username, password} = user;
-  console.log(username, password)
+async function getUser({username, password}){
+ 
+  console.log("this is getting the users",username, password)
   try{  
     const user =await getUserByUsername(username)
     console.log(user)
 
-    // const hashedPassword = user.password
-    // const passwordsMatch = await bcrypt.compare(password, hashedPassword)
+    const hashedPassword = user.password
+    const passwordsMatch = await bcrypt.compare(password, hashedPassword)
 
     if(passwordsMatch){
+      console.log("TEST", user)
       delete user.password
       return user
     }else{
@@ -59,6 +60,7 @@ async function getUser(user){
 
   }catch(err){
     console.error('ERROR GETTING USER!!!!', err);
+    throw err;
   }
 };
 
@@ -82,7 +84,7 @@ async function getUserById(userId) {
 
 //==============GET USER BY USERNAME================
 async function getUserByUsername(username){
-  //console.log(username)
+  console.log("this is getting the username", username)
   try{
     const {rows:[user]}= await client.query(`
       SELECT *
@@ -92,6 +94,7 @@ async function getUserByUsername(username){
     return user;
   }catch(err){
    console.error('ERROR GETTING USER BY USERNAME!!!!', err);
+   throw err
   }
 };
 
