@@ -8,7 +8,7 @@ async function createCartItem({cartOwner, productId, cartId, quantity}){
     INSERT INTO cartItem(cartOwner, productId, cartId, quantity)
     VALUES($1, $2, $3, $4)
     RETURNING *;
-    `)
+    `, [cartOwner, productId, cartId, quantity])
     return cartItem;
    }catch(err){
     throw err;
