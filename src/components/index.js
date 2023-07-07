@@ -1,2 +1,2 @@
 export { default as App } from './App';
-export { default as Register } from "./registering"
+export { default as Registering } from "./registering"
