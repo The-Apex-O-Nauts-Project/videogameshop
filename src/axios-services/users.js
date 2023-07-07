@@ -1,20 +1,22 @@
-import { post } from "../../api/carts"
 
-const BASE_URL = `https://localhost:3000/api`
+
+const BASE_URL = `http://localhost:3000/api/`
 
 //========USER ENDPOINTS===========
 //Register
 export const register =async (user) =>{
     try {
       const response = await fetch(
-        `${BASE_URL}/users/register`,{
+        `${BASE_URL}users/register`,{
           method: "POST",
           headers:{
             "Content-Type":"application/json"
           },
           body: JSON.stringify({
             username: user.username,
-            password: user.password
+            password: user.password,
+            email: user.email,
+            isAdmin: user.isAdmin
           })
         }
         )
@@ -30,7 +32,7 @@ export const register =async (user) =>{
 export const login = async (user) => {
       
   try {
-    const response = await fetch(`${BASE_URL}/users/login`, {
+    const response = await fetch(`${BASE_URL}users/login`, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json'
