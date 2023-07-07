@@ -40,7 +40,7 @@ usersRouter.get("/", async (req, res, next) => {
 usersRouter.post('/login', async (req, res, next) => {
     console.log("LOGIN ROUTE")
     const { username, password } = req.body;
-    console.log(username, password)
+    console.log("this is the username", username, password)
     if (!username || !password) {
       next({
         name: "MissingCredentialsError",
@@ -48,13 +48,12 @@ usersRouter.post('/login', async (req, res, next) => {
       });
     };
     try {
-        const user =await getUserByUsername(username)
-      console.log(user)
-      if (user.password == password) {
+    const user =await getUser({username, password})
+      console.log("this is the router!!!!",user)
+      if (user) {
         const token = jwt.sign({
           id: user.id, 
-          username: user.username, 
-          password: user.password 
+          username: user.username
         }, process.env.JWT_SECRET);
         res.send({ message: "you're logged in!", success: true, token: token});
       } else {
@@ -64,7 +63,7 @@ usersRouter.post('/login', async (req, res, next) => {
         });
       };
     } catch(error) {
-      console.log(error);
+      console.log("there was an error login", error);
       next(error);
     };
   });

@@ -98,7 +98,7 @@ cartsRouter.post("/addtocart", async (req, res, next) => {
 //================GET USER AND CART OR CHECK OUT?===============
 cartsRouter.get("/userandcart/:userId", async (req, res, next) => {
     console.log("GET USER AND CART ROUTE")
-    const {userId} = req.body;
+    const {userId} = req.params;
     try{
         const userAndCart = await getUserAndCart(userId);
         //console.log(userAndCart)

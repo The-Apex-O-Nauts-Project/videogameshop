@@ -12,7 +12,8 @@ const {
   getUserAndCart,
   createCartInventory,
   getAllProductByTag,
-  getAllProductByName
+  getAllProductByName,
+  createCartItem
 
 } = require('./');
 
@@ -60,10 +61,11 @@ async function createTables() {
         
         CREATE TABLE cart (
         id SERIAL PRIMARY KEY,
-         quantity INTEGER,
-         total INTEGER,
+        quantity INTEGER,
+        total INTEGER,
         "cartUserId" INTEGER REFERENCES users(id),
         "productsId" INTEGER REFERENCES products(id)
+        
         );
      
         CREATE TABLE cartItem (
@@ -149,20 +151,20 @@ async function createInitialCarts(){
     throw error
   }
 };
-// async function createInitialCartItem(){
-//   try{
-//     const cartItemToCreate = [
-//       {productId : 1, quantity: 2, cartId: 1},
-//       {productId: 2, quantity: 1, cartId: 2},
-//       {productId: 3, quantity: 1, cartId: 3}
-//     ]
-//     const cartItem = await Promise.all(cartItemToCreate.map(createCartInventory))
-//     console.log("Cart Item created:")
-//     console.log(cartItem)
-//   }catch(error){
-//     throw error
-//   }
-// }
+async function createInitialCartItem(){
+  try{
+    const cartItemToCreate = [
+      {cartOwnerId: 1, product: 1, quantity: 2, cartId: 1},
+      {cartOwnerId: 2, productId: 2, quantity: 1, cartId: 2},
+      {cartOwnerId: 3, productId: 3, quantity: 1, cartId: 3}
+    ]
+    const cartItem = await Promise.all(cartItemToCreate.map(createCartInventory))
+    console.log("Cart Item created:")
+    console.log(cartItem)
+  }catch(error){
+    throw error
+  }
+}
 
 async function rebuildDB() {
   try {
@@ -171,7 +173,7 @@ async function rebuildDB() {
     await createInitialUsers()
     await createInitialProducts()
     await createInitialCarts()
-   // await createInitialCartItem()
+    await createInitialCartItem()
 
 
    await addItemToCart(1,3,2,2)

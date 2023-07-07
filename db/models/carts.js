@@ -44,9 +44,9 @@ const client = require("../client")
       const { rows } = await client.query(`
       SELECT users.id AS "CartOwner" , cart.id AS "Cart", cart.quantity AS " CartQuantity"
       FROM cart
-      JOIN users ON cart."cartUserId" = users.Id;
-      
-      `);
+      INNER JOIN users ON cart."cartUserId" = users.id
+      WHERE users.id =$1;
+      `, [userId]);
     
       return rows;
     }catch(err){
@@ -132,8 +132,6 @@ const client = require("../client")
     `, [userId]);
 
     return cart;
-      
-      return cart;
     }catch(err){
       console.error('ERROR DELETING Cart by User Id!!!');
       console.error(err);
