@@ -6,11 +6,11 @@ function Registering({setToken}){
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
- 
+    const [isAdmin, setIsAdmin]= useState(false)
 
     async function handleSumbit(ev){
         ev.preventDefault()
-        const user = {username, password}
+        const user = {username, password, email, isAdmin}
         if(!username.trim()){
             alert("Please Enter a Username!!")
             return;
@@ -23,6 +23,7 @@ function Registering({setToken}){
         //     alert("Password is too short, it must be atleast 4 charaters")
         //     return;
         // }
+        console.log(user)
         const results = await register(user);
         console.log(results)
 
