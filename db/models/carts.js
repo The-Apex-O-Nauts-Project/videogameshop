@@ -44,9 +44,9 @@ const client = require("../client")
       const { rows } = await client.query(`
       SELECT users.id AS "CartOwner" , cart.id AS "Cart", cart.quantity AS " CartQuantity"
       FROM cart
-      JOIN users ON cart."cartUserId" = users.Id;
-      
-      `);
+      INNER JOIN users ON cart."cartUserId" = users.id
+      WHERE users.id =$1;
+      `, [userId]);
     
       return rows;
     }catch(err){

@@ -1,28 +1,28 @@
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom"
-import {register} from "../axios-services"
+import {register} from "../axios-services/users"
 
-function Register({setToken}){
+function Registering({setToken}){
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
-    const navigate = useNavigate()
+ 
 
     async function handleSumbit(ev){
         ev.preventDefault()
         const user = {username, password}
         if(!username.trim()){
-            alert("Please Enter a Username")
+            alert("Please Enter a Username!!")
             return;
         }
         if(!email.trim()){
-            alert("Please Enter a Email")
+            alert("Please Enter a Email!!")
             return;
         }
-        if(!password || password.length < 8){
-            alert("Password is too short, it must be atleast 8 charaters")
-            return;
-        }
+        // if(!password || password.length < 4){
+        //     alert("Password is too short, it must be atleast 4 charaters")
+        //     return;
+        // }
         const results = await register(user);
         console.log(results)
 
@@ -33,7 +33,7 @@ function Register({setToken}){
             
         }else{
             alert("There was an error registering")
-            console.log("Register has Failed")
+            
         }
     }
     return(
@@ -59,6 +59,7 @@ function Register({setToken}){
             </form>
         </div>
     )
+   
 }
 
-export default Register
+export default Registering
