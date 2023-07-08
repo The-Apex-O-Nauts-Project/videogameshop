@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+
 function Login(props){
     const{
         setUsername,
@@ -16,6 +17,8 @@ function Login(props){
         setToken,
         setIsLoggedIn,
         navigate,
+        setIsAdmin,
+        setUser
     }= props
     const defaultTheme = createTheme()
     async function handleSubmit(ev){
@@ -30,10 +33,12 @@ function Login(props){
         }
        
         if(results.success){
-            console.log("Login Successful: ", results)
+            console.log("Login Successful: ", user)
             setToken(results.token)
+            setIsAdmin(user.isAdmin)
             window.localStorage.setItem("token", results.token)
             setIsLoggedIn(true)
+            // setUser(user)
             console.log("Redirecting to home page...")
             navigate("/")
         }else{

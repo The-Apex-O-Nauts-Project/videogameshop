@@ -89,8 +89,8 @@ async function createTables() {
 async function createInitialUsers() {
   try {
     const usersToCreate =[
-      {username:"albert", password:"bertie99", 
-      email:"bert@gmail.com", isAdmin: true},
+      {username:"Admin", password:"Admin1234", 
+      email:"Admin@gmail.com", isAdmin: true},
       { username: "sandra", password: "sandra123", 
       email:"sandra@gmail.com", isAdmin: true },
       { username: "glamgal", password: "glamgal123", 
@@ -113,17 +113,17 @@ async function createInitialProducts(){
     {name:"Destiny 2", 
     description:"Really fun game you should play", 
     price: 0, 
-    photourl:"dsfsgadf", 
+    photourl:"https://assets-prd.ignimgs.com/2023/05/23/destiny2-seasondeep-1684857847531.jpg?width=300&crop=1%3A1%2Csmart", 
     category:["Action"]},
     {name:"Mass-Effect", 
       description:"Really fun game you should play", 
       price: 60,
-      photourl:"sadfasf",
+      photourl:"https://assets-prd.ignimgs.com/2021/12/09/masseffect-1639016658616.jpg?width=300&crop=1%3A1%2Csmart",
       category:[ "Shooter"]},
     {name:"TitanFall 2", 
       description:"Really fun game you should play ", 
       price: 60, 
-      photourl:"adfasf", 
+      photourl:"https://assets2.ignimgs.com/2016/09/23/titanfall-2-buttonjpg-f9a5df.jpg?width=300&crop=1%3A1%2Csmart", 
       category:["Shooter"]}
 
   ]

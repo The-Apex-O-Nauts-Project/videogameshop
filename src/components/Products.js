@@ -60,7 +60,7 @@ function Products(props){
                    {product.description}
                   </Typography>
                   <Typography>
-                    {product.price}
+                    ${product.price}
                   </Typography>
                   <Typography>
                     {product.category}
