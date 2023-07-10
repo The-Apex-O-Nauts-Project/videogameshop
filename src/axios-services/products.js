@@ -1,5 +1,5 @@
 const BASE_URL = `http://localhost:3000/api/`
-
+import {useParams} from "react-router"
 
 //========GET ALL PRODUCTS=============
 export const fetchAllProducts = async() =>{
@@ -43,3 +43,24 @@ export const createProduct = async(product)=>{
         console.error("There was an error when creating your product",err)
     }
 }
+//GET A PRODUCT BY ID
+export const fetchProductsById= async (productId) => {
+   
+    try {
+      const response = await fetch(`${BASE_URL}products/${productId}`,{
+        headers:{
+            "Content-Type":"application/json"
+        }
+      });
+      console.log(productId)
+      console.log("Ajax",response)
+      const result = await response.json();
+      console.log(result); 
+      return result
+    } catch (error) {
+      console.error('Error fetching products by tag:', error);
+      
+    }
+  };
+  
+  

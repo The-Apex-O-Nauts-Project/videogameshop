@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from "react";
-import { fetchAllProducts } from "../axios-services/products";
+import React, {useEffect} from "react";
+import { fetchAllProducts, fetchProductsById } from "../axios-services/products";
 import Button from '@mui/material/Button';
 import "../style/Product.css"
 import Box from '@mui/material/Box';
@@ -11,13 +11,16 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import SingleProduct from "./SingleProduct";
 
 function Products(props){
     const {
+        setSingleProduct,
         setProducts,
         products,
         navigate
     } = props
+   
     const defaultTheme = createTheme()
     useEffect(() => {
         async function AllProducts(){
@@ -35,15 +38,20 @@ function Products(props){
     function handleAddToCart(){
 
     }
-    return( 
+   
+        return( 
     <ThemeProvider theme={defaultTheme}>
         <Container sx={{ py: 8 }} maxWidth="md">
         <Grid container spacing={4}>
           {products.map((product) => (
-              <Grid item key={product} xs={12} sm={6} md={4}>
-              <Card
+              <Grid item key={product.id} xs={12} sm={6} md={4}>
+             <Card
                 sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                >
+                onClick={() => {
+                    setSingleProduct(product)
+                    navigate(`/single-product/${product.id}`)
+                }}
+              >
                 <CardMedia
                   component="div"
                   sx={{
@@ -67,8 +75,9 @@ function Products(props){
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button size="small" onClick={handleAddToCart}>Add To Cart</Button>
+                    <Button size="small" onClick={handleAddToCart}>Add To Cart</Button>
                 </CardActions>
+                      
               </Card>
         </Grid>
           ))}

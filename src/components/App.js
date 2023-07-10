@@ -5,7 +5,8 @@ import {
   Nav,
   Login,
   Products,
-  CreateProduct
+  CreateProduct,
+  SingleProduct
 } from "./index"
 // getAPIHealth is defined in our axios-services directory index.js
 // you can think of that directory as a collection of api adapters
@@ -23,6 +24,7 @@ const App = () => {
   const [password, setPassword] = useState("")
   const [email, setEmail] = useState("")
   const [products, setProducts] = useState([])
+  const [singleProduct, setSingleProduct] = useState([])
   const [isAdmin, setIsAdmin]=useState(false)
   const [name, setName] = useState("")
   const [description,setDescription] =useState("")
@@ -56,7 +58,7 @@ useEffect(() =>{
   
   async function fetchUserData(){
     try{
-      const response = await myData();
+      const response = await myData(userId);
       // const user = response.user;
       // setIsAdmin(user.isAdmin)
       // console.log("isAdmin", isAdmin)
@@ -71,20 +73,18 @@ useEffect(() =>{
   return (
     <div className="app-container">
     <h1>Video Game Shop</h1>
+    <Nav
+      isAdmin={isAdmin}
+      setToken={setToken}
+      setIsLoggedIn={setIsLoggedIn}
+      isLoggedIn={isLoggedIn}
+      navigate ={navigate}
+    />
     <>
       <Routes>
+  
         <Route
-        path='/'
-        element={<Nav
-        isAdmin={isAdmin}
-        setToken={setToken}
-        setIsLoggedIn={setIsLoggedIn}
-        isLoggedIn={isLoggedIn}
-        navigate ={navigate}
-        />}
-        />
-        <Route
-        path='/Registering'
+        path='/register'
         element={<Register
         setUsername={setUsername}
         username={username}
@@ -98,7 +98,7 @@ useEffect(() =>{
         />}
         />
         <Route
-        path="/Login"
+        path="/login"
         element={<Login
         // setUser={setUser}
         setUsername={setUsername}
@@ -113,15 +113,25 @@ useEffect(() =>{
         />}
         />
         <Route
-        path='/Products'
+        path='/products'
         element={<Products
+        singleProduct={singleProduct}
+        setSingleProduct={setSingleProduct}
         setProducts={setProducts}
         products={products}
         navigate={navigate}
         />}
         />
         <Route
-        path="/CreateProduct"
+        path="/single-product/:productId"
+        element={<SingleProduct
+        navigate={navigate}
+        singleProduct={singleProduct}
+        setSingleProduct={setSingleProduct}
+        />}
+        />
+        <Route
+        path="/create-product"
         element={<CreateProduct
         navigate={navigate}
         setName={setName}

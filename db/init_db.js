@@ -11,7 +11,7 @@ const {
   addItemToCart,
   getUserAndCart,
   createCartInventory,
-  getAllProductByTag,
+  getAllProductById,
   getAllProductByName,
   createCartItem
 
@@ -191,7 +191,7 @@ async function rebuildDB() {
     const getAUSERBYID = await getUserById(1);
     console.log("getAUSERBYID", getAUSERBYID);
 
-    const getProdId = await getAllProductByTag(1);
+    const getProdId = await getAllProductById(1);
     console.log("getProdId", getProdId);
 
     const getProdName = await getAllProductByName("Destiny 2");

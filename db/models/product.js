@@ -30,7 +30,7 @@ async function getAllProducts(){
 }
 
 //=========Get Products By Id=========
-async function getAllProductByTag(id){
+async function getAllProductById(id){
     try{
         const {rows:[productId]}= await client.query(`
         SELECT id, name, description
@@ -150,7 +150,7 @@ async function attachAProductToCart(cartItems) {
 module.exports = {
     createProduct,
     getAllProducts,
-    getAllProductByTag,
+    getAllProductById,
     getAllProductByName,
     updateProduct, 
     deleteProduct,
