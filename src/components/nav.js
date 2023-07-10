@@ -32,15 +32,13 @@ function Nav(props){
             <Button variant="contained">
                 <Link to="/Products">Games</Link>
             </Button>
-           
-            
-            <Button type="sumbit" variant="contained" onClick={logout}>Log Out</Button>
-            {isAdmin?
             <Button variant="contained">
                 <Link to="/CreateProduct">Create Product</Link>
             </Button>
-            : null
-            }
+           
+            
+            <Button type="sumbit" variant="contained" onClick={logout}>Log Out</Button>
+        
             </> 
             }
         </nav>    

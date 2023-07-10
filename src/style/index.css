@@ -7,7 +7,7 @@
 :root {
   /* define variables here */
   --green: green;
-  --red: red;
+  --red: rgb(178, 191, 199);
   --black: rgb(0, 0, 0);
 }
 
