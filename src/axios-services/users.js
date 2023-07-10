@@ -49,20 +49,21 @@ export const login = async (user) => {
     console.error(err);
   }
 }
-//get all users
-export const getAllUsers = async () => {
-    try {
-      const response = await fetch(`${BASE_URL}/users`, {
-        headers: {
-          'Content-Type': 'application/json',
-          
-        },
-      });
-      const result = await response.json();
-      console.log(result);
-      return result
-    } catch (err) {
-      console.error(err);
-    }
+//User Data
+export const myData = async (userId)=>{
+  const token = window.localStorage.getItem("token")
+
+  try{
+    const response = await fetch(`${BASE_URL}/users/${userId}`,{
+      headers:{
+        "Content-Type":"application/json",
+        "Authorization":`Bearer ${token}`
+      }
+    })
+    const result = await response.json()
+    console.log(result)
+    return result
+  }catch(err){
+    console.error("There was an error getting your data", err)
   }
-     
+}

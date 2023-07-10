@@ -2,11 +2,13 @@ import React from "react"
 import {Link} from "react-router-dom"
 import Button from '@mui/material/Button';
 
-function Nav({setToken, setIsLoggedIn, isLoggedIn}){
+function Nav(props){
+    const {setToken, setIsLoggedIn, isLoggedIn, isAdmin, navigate} = props
     function logout(){
         setToken("")
         setIsLoggedIn(false)
         window.localStorage.removeItem("token")
+        navigate("/")
     }
 
     return(
@@ -30,8 +32,15 @@ function Nav({setToken, setIsLoggedIn, isLoggedIn}){
             <Button variant="contained">
                 <Link to="/Products">Games</Link>
             </Button>
+           
             
-            <Button type="sumbit" onClick={logout}>Log Out</Button>
+            <Button type="sumbit" variant="contained" onClick={logout}>Log Out</Button>
+            {isAdmin?
+            <Button variant="contained">
+                <Link to="/CreateProduct">Create Product</Link>
+            </Button>
+            : null
+            }
             </> 
             }
         </nav>    

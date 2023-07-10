@@ -9,7 +9,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import {register} from "../axios-services/users"
 
-function Registering(props){
+function Register(props){
     const {
         setToken,
         setIsLoggedIn,
@@ -126,4 +126,4 @@ function Registering(props){
    
 
 
-export default Registering
+export default Register

@@ -6,10 +6,11 @@ productsRouter.use(express.json());
 const {
     createProduct,
     getAllProducts,
-    getAllProductByTag,
+    getAllProductById,
     getAllProductByName,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+   
 }= require("../db");
 
 
@@ -31,10 +32,10 @@ productsRouter.get("/", async (req, res, next) => {
 
 //================GET ALL PRODUCTS BY ID===============
 
-productsRouter.get("/:tag", async (req, res, next) => {
-    const {tag} = req.params;
+productsRouter.get("/:productId", async (req, res, next) => {
+    const {productId} = req.params;
     try{
-        const products = await getAllProductByTag(tag);
+        const products = await getAllProductById(productId);
         //console.log(products)
         res.send({
             products,
