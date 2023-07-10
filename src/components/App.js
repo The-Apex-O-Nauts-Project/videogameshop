@@ -113,7 +113,7 @@ useEffect(() =>{
         />}
         />
         <Route
-        path='/products'
+        path='/'
         element={<Products
         singleProduct={singleProduct}
         setSingleProduct={setSingleProduct}

@@ -1,4 +1,5 @@
 import React, {useEffect} from "react";
+import {Link} from "react-router-dom"
 import { fetchAllProducts, fetchProductsById } from "../axios-services/products";
 import Button from '@mui/material/Button';
 import "../style/Product.css"
@@ -11,6 +12,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import SingleProduct from "./SingleProduct";
 
 function Products(props){
@@ -39,6 +41,18 @@ function Products(props){
           behavior:"smooth"
         })
 
+    }
+    function Copyright() {
+      return (
+        <Typography variant="body2" color="text.secondary" align="center">
+          {'Copyright © '}
+          <Link color="inherit" href="http://localhost:3001/">
+            Apex Shop
+          </Link>{' '}
+          {new Date().getFullYear()}
+          {'.'}
+        </Typography>
+      );
     }
     function handleAddToCart(){
 
@@ -80,7 +94,7 @@ function Products(props){
                   </Typography>
                 </CardContent>
                 <CardActions>
-                    <Button size="small" onClick={handleAddToCart}>Add To Cart</Button>
+                    <Button size="small" onClick={handleAddToCart} startIcon={<AddShoppingCartIcon/>}></Button>
                 </CardActions>
                       
               </Card>
@@ -96,6 +110,18 @@ function Products(props){
             >Scroll to Top</Button>
            </Box>   
       </Container>
+      <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
+      
+        <Typography
+          variant="subtitle1"
+          align="center"
+          color="text.secondary"
+          component="p"
+        >
+          
+        </Typography>
+        <Copyright />
+      </Box>
     </ThemeProvider>
     )
 }
