@@ -1,6 +1,7 @@
 import React from "react"
 import {Link} from "react-router-dom"
 import Button from '@mui/material/Button';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 function Nav(props){
     const {setToken, setIsLoggedIn, isLoggedIn, isAdmin, navigate} = props
@@ -15,25 +16,38 @@ function Nav(props){
         <nav className="nav-bar">
             {!isLoggedIn ?
             <>
-            <Button variant="contained">
-                <Link to="/Registering">Register</Link>
+            <Button variant="contained" >
+                <Link to="/Register" 
+                style={{textDecoration:"none", color:"white"}}>
+                    Register
+                    </Link>
             </Button>
            
             <Button variant="contained">
-                <Link to="/Login">Login</Link>
+                <Link to="/Login" 
+                style={{textDecoration:"none", color:"white"}}>Login</Link>
             </Button>
            
             <Button variant="contained">
-                <Link to="/Products">Games</Link>
+                <Link to="/" 
+                style={{textDecoration:"none", color:"white"}}>Store</Link>
             </Button> 
             </>
             :
             <>
-            <Button variant="contained">
-                <Link to="/Products">Games</Link>
+            <Button variant="contained" >
+                <Link to="/" 
+                style={{textDecoration:"none", color:"white"}}
+                >Store</Link>
             </Button>
             <Button variant="contained">
-                <Link to="/CreateProduct">Create Product</Link>
+                <Link to="/create-product" 
+                style={{textDecoration:"none", color:"white"}}>Create Product</Link>
+            </Button>
+            <Button variant="contained" 
+            startIcon={<ShoppingCartIcon/>} 
+            style={{textDecoration:"none", color:"white"}}>
+                Your Cart
             </Button>
            
             
