@@ -18,24 +18,38 @@ return (
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-  }}>
-    <Typography variant="h3">{singleProduct.name}</Typography>
+    padding: "45px",
+  }}
+  style={{
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 1)', 
+    background:"rgb(190,210,175)", 
+  }}
+  >
     <img src={singleProduct.photourl} style={{ width: "450px", height: "auto" }} alt={singleProduct.name} />
-    <Typography variant="h5">{singleProduct.description}</Typography>
-    <Typography variant="h4">${singleProduct.price}</Typography>
-    <Typography variant="h4">{singleProduct.category}</Typography>
+    <Typography variant="h3" sx={{display:"felx", margin:"20px"}}>{singleProduct.name}</Typography>
+    <Typography variant="h5">Game Description: {singleProduct.description}</Typography>
+    <Box sx={{  display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <Typography variant="h5" component="span" sx={{ mr: 2 }}>Price: ${singleProduct.price}</Typography>
+      <Typography variant="h5" component="span">Category: {singleProduct.category.slice(1,-1).replace(/"/g, '')}</Typography>
+    </Box>
     <Box component="form" onSubmit={handleAddToCart} noValidate sx={{ mt: 3 }}>
       <Button
         type="submit"
         fullWidth
         variant="contained"
         sx={{ mt: 3, mb: 2 }}
-        startIcon={<AddShoppingCartIcon/>}
+        style={{boxShadow: '0 2px 4px rgba(0, 0, 0, 1)', 
+        background:"rgb(107,118,86)", 
+        '&:hover': {boxShadow: '0 10px 10px rgba(0, 0, 0, 1)', 
+        backgroundColor: 'rgb(107, 118, 86, 0.8)', marginTop: '-10px',}
+        }}
+        startIcon={<AddShoppingCartIcon />}
       >
         Add To Cart
       </Button>
     </Box>
   </Container>
+  
 
 )
 }

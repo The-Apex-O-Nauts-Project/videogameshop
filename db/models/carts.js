@@ -23,14 +23,16 @@ const client = require("../client")
 
 //==================ADD ITEM TO CART=================
 
-  const addItemToCart = async ( quantity, total, cartUserId,productsId) =>{
+  const addItemToCart = async (cartItem) =>{
+    const {cartUserId, productsId, quantity, total} = cartItem;
     try {
-  await client.query(`
-        INSERT INTO cart (quantity, total, "cartUserId", "productsId")
-        VALUES ($1, $2, $3, $4)
-        RETURNING*;
+      await client.query(`
+          INSERT INTO cart  "cartUserId", "productsId")
+          VALUES ($1, $2, $3, $4)
+          RETURNING*;
       `, [quantity,total,cartUserId,productsId]);
-  
+      console.log(cartItem)
+      return cartItem
     } catch (err) {
     console.log('ERROR ADDING ITEM TO CART!!!!');
     console.error(err)

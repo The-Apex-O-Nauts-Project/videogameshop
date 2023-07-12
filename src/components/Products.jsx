@@ -14,13 +14,23 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import SingleProduct from "./SingleProduct";
+import { getAddToCart } from "../axios-services/cart";
 
 function Products(props){
     const {
+        user,
         setSingleProduct,
         setProducts,
         products,
-        navigate
+        navigate,
+        setCartUserId,
+        setProductId,
+        quantity,
+        total,
+        cartUserId,
+        productId,
+        setQuantity,
+        setTotal
     } = props
    
     const defaultTheme = createTheme()
@@ -42,30 +52,28 @@ function Products(props){
         })
 
     }
-    function Copyright() {
-      return (
-        <Typography variant="body2" color="text.secondary" align="center">
-          {'Copyright © '}
-          <Link color="inherit" href="http://localhost:3001/">
-            Apex Shop
-          </Link>{' '}
-          {new Date().getFullYear()}
-          {'.'}
-        </Typography>
-      );
-    }
-    function handleAddToCart(){
+    
+    async function handleAddToCart(){
 
+      console.log("This is the user id", user.id)
+      const results = await getAddToCart(cartUserId, productId)
+      //console.log(results)
     }
    
         return( 
-    <ThemeProvider theme={defaultTheme}>
-        <Container sx={{ py: 4 }} maxWidth="md">
-        <Grid container spacing={4}>
+    <ThemeProvider theme={defaultTheme} >
+        <Container  sx={{ py: 4 }} maxWidth="md">
+        <Grid container spacing={7}>
           {products.map((product) => (
               <Grid item key={product.id} xs={12} sm={6} md={4}>
              <Card
-                sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                sx={{ height: '100%', display: 'flex', 
+                flexDirection: 'column', boxShadow: '0 2px 4px rgba(0, 0, 0, 1)',
+                '&:hover': {boxShadow: '0 10px 10px rgba(0, 0, 0, 1)', 
+                backgroundColor: 'rgb(107, 118, 86, 0.8)', 
+                marginTop: '-10px',}
+                }}
+                style={{backgroundColor:"rgb(107,118,86)"}}
                 onClick={() => {
                     setSingleProduct(product)
                     navigate(`/single-product/${product.id}`)
@@ -87,41 +95,43 @@ function Products(props){
                    {product.description}
                   </Typography>
                   <Typography>
-                    ${product.price}
+                    Price: ${product.price}
                   </Typography>
                   <Typography>
-                    {product.category}
+                    {product.category.slice(1,-1).replace(/"/g, '')}
                   </Typography>
                 </CardContent>
                 <CardActions>
-                    <Button size="small" onClick={handleAddToCart} startIcon={<AddShoppingCartIcon/>}></Button>
                 </CardActions>
                       
               </Card>
+              <Box style={{padding:"15px", }}>
+              <Button size="small"  type="submit"  variant="contained" 
+              style={{boxShadow: '0 2px 4px rgba(0, 0, 0, 1)', 
+              background:"rgb(107,118,86)", 
+              '&:hover': {boxShadow: '0 10px 10px rgba(0, 0, 0, 1)', 
+              backgroundColor: 'rgb(107, 118, 86, 0.8)', marginTop: '-10px',}
+              }}
+              onClick={()=>{handleAddToCart(), setCartUserId(user.id), setProductId(product.id)}} 
+              startIcon={<AddShoppingCartIcon/>}>Add to cart</Button>
+              </Box>
         </Grid>
           ))}
         </Grid>
-          <Box component="form" onSubmit={handleScrollToTop} noValidate sx={{ mt: 1 }}>
+          <Box style={{padding:"50px", }} component="form" onSubmit={handleScrollToTop} noValidate sx={{ mt: 1 }}>
             <Button 
             type="submit"
             fullWidth
             variant="contained"
             sx={{mt:3, mb: 2}}
+            style={{background:"rgb(107,118,86)", 
+            boxShadow: '0 2px 4px rgba(0, 0, 0, 1)', "&hover":{
+              boxShadow:"0 10px 10px", marginTop: "-10px"
+            }}}
             >Scroll to Top</Button>
            </Box>   
       </Container>
-      <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
       
-        <Typography
-          variant="subtitle1"
-          align="center"
-          color="text.secondary"
-          component="p"
-        >
-          
-        </Typography>
-        <Copyright />
-      </Box>
     </ThemeProvider>
     )
 }
