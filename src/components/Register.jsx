@@ -5,6 +5,7 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import { Alert } from "@mui/material";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import {register} from "../axios-services/users"
@@ -18,23 +19,34 @@ function Register(props){
         setPassword,
         setEmail,
         email,
+        emailError,
+        setEmailError,
         username,
+        usernameError,
+        setUsernameError,
+        passwordError,
+        setPasswordError,
         password
     }= props
     const defaultTheme = createTheme()
     async function handleSubmit(ev){
         ev.preventDefault()
         const user = {username, password, email}
+        const emailCheck = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if(!emailCheck.test(email) ){
+          setEmailError("Please Enter A Valid Email Address")
+          return
+        }
         if(!username.trim()){
-            alert("Please Enter a Username!!")
+            setUsernameError("Please Enter A Username")
             return;
         }
         if(!email.trim()){
-            alert("Please Enter a Email!!")
-            return;
+          setEmailError("Please Enter A Email")
+          return 
         }
-        // if(!password || password.length < 4){
-        //     alert("Password is too short, it must be atleast 4 charaters")
+        // if(!password || password.length < 8){
+        //     alert("Password is too short, it must be atleast 8 charaters")
         //     return;
         // }
         console.log(user)
@@ -49,7 +61,7 @@ function Register(props){
             navigate("/Login")
             
         }else{
-            alert("There was an error registering")
+            <Alert severity="error">There was an Error Registering</Alert>
             
         }
     }
@@ -58,7 +70,10 @@ function Register(props){
     }
     return (
         <ThemeProvider theme={defaultTheme}>
-          <Container component="main" maxWidth="xs">
+          <Container component="main" maxWidth="xs" 
+            style={{boxShadow: '0 2px 4px rgba(0, 0, 0, 1)', 
+              background:"rgb(79,89,63)", 
+              borderRadius: '8px',}}>
             <CssBaseline />
             <Box
               sx={{
@@ -69,8 +84,8 @@ function Register(props){
               }}
             >
               
-              <Typography component="h1" variant="h5">
-                Sign in
+              <Typography component="h1" variant="h5" style={{color:"white"}}>
+                Sign Up
               </Typography>
               <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
               <TextField
@@ -81,6 +96,8 @@ function Register(props){
                 label="Email"
                 name="email"
                 onChange={(ev)=> setEmail(ev.target.value)}
+                error={Boolean(emailError)}
+                helperText={emailError}
                 />
                 <TextField
                 margin="normal"
@@ -90,6 +107,8 @@ function Register(props){
                 label="Username"
                 name="username"
                 onChange={(ev)=> setUsername(ev.target.value)}
+                error={Boolean(usernameError)}
+                helperText={usernameError}
                 />
                 <TextField
                   margin="normal"
@@ -106,6 +125,11 @@ function Register(props){
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
+                  style={{boxShadow: '0 2px 4px rgba(0, 0, 0, 1)', 
+                  background:"rgb(107,118,86)", 
+                  '&:hover': {boxShadow: '0 10px 10px rgba(0, 0, 0, 1)', 
+                  backgroundColor: 'rgb(107, 118, 86, 0.8)', marginTop: '-10px',}
+                  }}
                 >
                   Sign up
                 </Button>
@@ -116,6 +140,11 @@ function Register(props){
                 fullWidth
                 variant="contained"
                 sx={{mt:3, mb: 2}}
+                style={{boxShadow: '0 2px 4px rgba(0, 0, 0, 1)', 
+                background:"rgb(107,118,86)", 
+                '&:hover': {boxShadow: '0 10px 10px rgba(0, 0, 0, 1)', 
+                backgroundColor: 'rgb(107, 118, 86, 0.8)', marginTop: '-10px',}
+                }}
                 >Home</Button>
                </Box>   
             </Box>

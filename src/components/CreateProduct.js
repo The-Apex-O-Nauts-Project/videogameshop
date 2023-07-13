@@ -48,7 +48,9 @@ function CreateProduct(props){
     }
     return (
         <ThemeProvider theme={defaultTheme}>
-          <Container component="main" maxWidth="xs">
+          <Container component="main" maxWidth="xs" style={{boxShadow: '0 2px 4px rgba(0, 0, 0, 1)', 
+              background:"rgb(79,89,63)", 
+              borderRadius: '8px',}}>
             <CssBaseline />
             <Box
               sx={{
@@ -59,7 +61,7 @@ function CreateProduct(props){
               }}
             >
               
-              <Typography component="h1" variant="h5">
+              <Typography component="h1" variant="h5" style={{color:"white"}}>
                 Create Product
               </Typography>
               <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
@@ -117,7 +119,11 @@ function CreateProduct(props){
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
-                >
+                  style={{boxShadow: '0 2px 4px rgba(0, 0, 0, 1)', 
+                  background:"rgb(107,118,86)", 
+                  '&:hover': {boxShadow: '0 10px 10px rgba(0, 0, 0, 1)', 
+                  backgroundColor: 'rgb(107, 118, 86, 0.8)', marginTop: '-10px',}
+                  }}>
                   Create Product
                 </Button>
               </Box>
@@ -126,7 +132,11 @@ function CreateProduct(props){
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{mt:3, mb: 2}}>
+                sx={{mt:3, mb: 2}}style={{boxShadow: '0 2px 4px rgba(0, 0, 0, 1)', 
+                background:"rgb(107,118,86)", 
+                '&:hover': {boxShadow: '0 10px 10px rgba(0, 0, 0, 1)', 
+                backgroundColor: 'rgb(107, 118, 86, 0.8)', marginTop: '-10px',}
+                }}>
                     Home
                 </Button>
                </Box>   

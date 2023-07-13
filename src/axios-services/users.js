@@ -50,11 +50,11 @@ export const login = async (user) => {
   }
 }
 //User Data
-export const myData = async (userId)=>{
+export const getUser = async ()=>{
   const token = window.localStorage.getItem("token")
 
   try{
-    const response = await fetch(`${BASE_URL}/users/${userId}`,{
+    const response = await fetch(`${BASE_URL}users/me`,{
       headers:{
         "Content-Type":"application/json",
         "Authorization":`Bearer ${token}`
