@@ -78,7 +78,7 @@ const client = require("../client")
 
   const getCartByUserId = async (userId) => {
     try{
-      const { rows: [ cart ] } = await client.query(`
+      const { rows:  cart  } = await client.query(`
       SELECT *
       FROM cart
       WHERE "cartUserId" = $1;
@@ -130,7 +130,7 @@ const client = require("../client")
       const { rows: [ cart ] } = await client.query(`
       DELETE *
       FROM cart
-      WHERE "cartUserId" = $1;
+      WHERE "cartOwnerId" = $1;
     `, [userId]);
 
     return cart;

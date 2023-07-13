@@ -32,17 +32,21 @@ function Register(props){
     async function handleSubmit(ev){
         ev.preventDefault()
         const user = {username, password, email}
+        const emailCheck = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if(!emailCheck.test(email) ){
+          setEmailError("Please Enter A Valid Email Address")
+          return
+        }
         if(!username.trim()){
             setUsernameError("Please Enter A Username")
             return;
         }
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if(!emailRegex.test(email) && !email.trim()){
-          setEmailError("Please Enter A Valid Email Address")
-          return
+        if(!email.trim()){
+          setEmailError("Please Enter A Email")
+          return 
         }
-        // if(!password || password.length < 4){
-        //     alert("Password is too short, it must be atleast 4 charaters")
+        // if(!password || password.length < 8){
+        //     alert("Password is too short, it must be atleast 8 charaters")
         //     return;
         // }
         console.log(user)
@@ -57,7 +61,7 @@ function Register(props){
             navigate("/Login")
             
         }else{
-            alert("There was an error registering")
+            <Alert severity="error">There was an Error Registering</Alert>
             
         }
     }

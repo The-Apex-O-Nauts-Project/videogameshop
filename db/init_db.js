@@ -65,7 +65,7 @@ async function createTables() {
         total INTEGER,
         "cartUserId" INTEGER REFERENCES users(id),
         "productsId" INTEGER REFERENCES products(id)
-        
+      
         );
      
         CREATE TABLE cartItem (

@@ -29,8 +29,9 @@ const App = () => {
   const [password, setPassword] = useState("")
   const [passwordError, setPasswordError] = useState("")
   const [email, setEmail] = useState("")
-  const [emailError, setEmailError] = useState('');
+  const [emailError, setEmailError] = useState('')
   const [products, setProducts] = useState([])
+  const [currentPage, setCurrentPage] = useState(1)
   const [singleProduct, setSingleProduct] = useState([])
   const [isAdmin, setIsAdmin]=useState(false)
   const [name, setName] = useState("")
@@ -98,9 +99,8 @@ useEffect(() =>{
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
-      width: '100%',
+      width: 'auto',
       height: 'auto',
-      backgroundOpcity:"0.3"
     }}>
     <h1 
     style={{backgroundColor:"rgb(79,89,63)", color:"white", borderRadius: '8px' }}
@@ -169,6 +169,8 @@ useEffect(() =>{
         productId={productId}
         setQuantity={setQuantity}
         setTotal={setTotal}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
         
         />}
         />

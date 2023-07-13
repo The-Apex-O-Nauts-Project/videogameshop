@@ -36,27 +36,8 @@ const Cart = (props) =>{
     return(
         <>
         <h1>Cart</h1>
-        <Grid container spacing={4}>
-          {cart.map((cartItem) => (
-              <Grid item key={cartItem.id} xs={12} sm={6} md={4}>
-             <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-                <CardContent sx={{ flexGrow: 1 }}>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    {cartItem.quantity}
-                  </Typography>
-                  <Typography>
-                   ${cartItem.total}
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                </CardActions>
-                      
-              </Card>
-        </Grid>
-          ))}
-        </Grid>
-        <Button
-         
+       
+        <Button 
          variant="contained">
         <Link to="/" style={{textDecoration:"none", color:"white"}}>Back to products</Link>
         </Button>

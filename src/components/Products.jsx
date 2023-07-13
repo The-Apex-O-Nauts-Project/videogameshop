@@ -16,6 +16,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import SingleProduct from "./SingleProduct";
 import { getAddToCart } from "../axios-services/cart";
 
+
 function Products(props){
     const {
         user,
@@ -30,8 +31,11 @@ function Products(props){
         cartUserId,
         productId,
         setQuantity,
-        setTotal
+        setTotal,
+        currentPage,
+        setCurrentPage
     } = props
+    const productsPerPage= 6;
    
     const defaultTheme = createTheme()
 
@@ -59,12 +63,23 @@ function Products(props){
       const results = await getAddToCart(cartUserId, productId)
       //console.log(results)
     }
-   
-        return( 
+
+    const indexOfLastProduct = currentPage * productsPerPage;
+    const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+    const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+
+    //console.log(currentProducts)
+    const paginate =(pageNumber)=>{
+      //console.log(currentPage)
+      setCurrentPage(pageNumber)
+
+    }
+    
+    return( 
     <ThemeProvider theme={defaultTheme} >
         <Container  sx={{ py: 4 }} maxWidth="md">
         <Grid container spacing={7}>
-          {products.map((product) => (
+          {currentProducts.map((product) => (
               <Grid item key={product.id} xs={12} sm={6} md={4}>
              <Card
                 sx={{ height: '100%', display: 'flex', 
@@ -110,7 +125,7 @@ function Products(props){
               style={{boxShadow: '0 2px 4px rgba(0, 0, 0, 1)', 
               background:"rgb(107,118,86)", 
               '&:hover': {boxShadow: '0 10px 10px rgba(0, 0, 0, 1)', 
-              backgroundColor: 'rgb(107, 118, 86, 0.8)', marginTop: '-10px',}
+              marginTop: '-10px',}
               }}
               onClick={()=>{handleAddToCart(), setCartUserId(user.id), setProductId(product.id)}} 
               startIcon={<AddShoppingCartIcon/>}>Add to cart</Button>
@@ -118,7 +133,23 @@ function Products(props){
         </Grid>
           ))}
         </Grid>
-          <Box style={{padding:"50px", }} component="form" onSubmit={handleScrollToTop} noValidate sx={{ mt: 1 }}>
+          <Box style={{padding:"50px", }} 
+          component="form" onSubmit={handleScrollToTop} 
+          noValidate 
+          sx={{ mt: 1, justifyContent: "center"}}>
+            {Array.from({length: Math.ceil(products.length / productsPerPage)}).map(
+              (item, index) => (
+                <Button key={index}
+                onClick={()=> paginate(index+1)}
+                variant={currentPage === index + 1 ? "contained" : "outlined"}
+                style={{margin: "0 5px",
+                background:"rgb(107,118,86)", 
+                boxShadow: '0 2px 4px rgba(0, 0, 0, 1)'}}>
+                  {index + 1}
+                </Button>
+              ))}
+      
+             
             <Button 
             type="submit"
             fullWidth
