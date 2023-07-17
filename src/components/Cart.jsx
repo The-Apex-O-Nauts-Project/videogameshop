@@ -19,6 +19,7 @@ const Cart = (props) => {
       setCart,
       products,
       setProducts,
+      handlleGoToCart,
       navigate,
       user,
     
@@ -37,12 +38,12 @@ const calculateTotal = () => {
 const handleDeleteItem = async (ev) =>{
   console.log("This is the event", ev)
   try{
-  const result = await destroyCart(ev)
+ destroyCart(ev)
  // navigate(`/cart/${user.id}`)
 
   // ev.preventDefault();
   // const updatedCart = cart.filter((item) => item.productId !== productId)
-  // setCart(updatedCart)
+  //setCart(result)
 }catch(err){
   console.error("There was an error deleting the item", err);
 }
@@ -73,11 +74,10 @@ return(
                   background:"rgb(107, 118, 86)",
                   boxShadow:"0 2px 4px rgba(0, 0, 0, 1)",
                 }}
-                onClick={()=>{handleDeleteItem(cartuser.id)
+                onClick={()=>{handleDeleteItem(cartuser.id);
+                  handlleGoToCart();
                 navigate(`/cart/${user.id}`)}}
-              
                 startIcon={<RemoveShoppingCartIcon/>}>
-        
                 </Button>
 
             </Paper>

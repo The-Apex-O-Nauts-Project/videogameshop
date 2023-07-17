@@ -12,6 +12,7 @@ function Nav(props){
         isAdmin, 
         navigate, 
         user,
+        handlleGoToCart,
        
         setCartUserId,
         setCart
@@ -23,24 +24,24 @@ function Nav(props){
         window.localStorage.removeItem("token")
         navigate("/")
     }
-    const handlleGoToCart = async() =>{
+    // const handlleGoToCart = async() =>{
         
-        try{
+    //     try{
 
-            console.log("This is the user id", user.id)
-            const result = await fetchCartByUserId(user.id)
-            console.log("This is the cart", result)
-            if(result.cart){
-                setCart(result.cart)
-                console.log(result.cart)
-                navigate(`/cart/${user.id}`)
-            }else{
-                alert("You do not have a cart")
-            }
-        }catch(err){
-            console.error("There was an error getting the users cart", err)
-        }
-    }
+    //         console.log("This is the user id", user.id)
+    //         const result = await fetchCartByUserId(user.id)
+    //         console.log("This is the cart", result)
+    //         if(result.cart){
+    //             setCart(result.cart)
+    //             console.log(result.cart)
+    //             navigate(`/cart/${user.id}`)
+    //         }else{
+    //             alert("You do not have a cart")
+    //         }
+    //     }catch(err){
+    //         console.error("There was an error getting the users cart", err)
+    //     }
+    // }
     return(
         <nav className="nav-bar">
             {!isLoggedIn ?
