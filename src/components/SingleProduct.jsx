@@ -7,8 +7,22 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 function SingleProduct(props) {
 const {navigate, singleProduct, setSingleProduct} = props    
 
-function handleAddToCart(){
-
+async function handleAddToCart() {
+  console.log("This is the user",user.id)
+  try {
+    const result = await getAddToCart(
+      productName,
+      productPrice,
+      productDescription,
+      quantity,
+      user.id, 
+      productId
+    );
+  //  setCart(result)
+   
+  } catch (error) {
+    console.error("An error occurred while adding product to cart:", error);
+  }
 }
    
 return (
@@ -44,7 +58,14 @@ return (
         backgroundColor: 'rgb(107, 118, 86, 0.8)', marginTop: '-10px',}
         }}
         startIcon={<AddShoppingCartIcon />}
-      >
+        onClick={()=>{
+          handleAddToCart(), 
+          setCartUserId(user.id), 
+          setProductId(product.id),
+          setProductName(product.name),
+          setProductPrice(product.price),
+          setProductDescription(product.description)
+        }}>
         Add To Cart
       </Button>
     </Box>

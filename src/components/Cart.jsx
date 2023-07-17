@@ -34,15 +34,17 @@ const calculateTotal = () => {
   });
   return total;
 };
+
 const handleDeleteItem = async (ev) =>{
   console.log("This is the event", ev)
   try{
   const result = await destroyCart(ev)
- // navigate(`/cart/${user.id}`)
+  //navigate(`/cart/${user.id}`)
+  
 
   // ev.preventDefault();
-  // const updatedCart = cart.filter((item) => item.productId !== productId)
-  // setCart(updatedCart)
+  
+  // setCart(cart)
 }catch(err){
   console.error("There was an error deleting the item", err);
 }
