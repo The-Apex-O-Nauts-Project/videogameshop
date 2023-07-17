@@ -71,7 +71,7 @@ export const fetchCartByUserId = async (id) => {
 };
 
 export const destroyCart = async (id) => {
-  console.log(token)
+  console.log(id)
   try {
     const response = await fetch(`${BASE_URL}/carts/deletecart/${id}`, {
       method: "DELETE",
