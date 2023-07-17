@@ -142,7 +142,7 @@ function Products(props){
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  {/* <Typography>Quantity</Typography>
+                  <Typography>Quantity</Typography>
                   <Select value={quantity} 
                   onChange={handleQuantityChange} sx={{ mr: 1 }}
                   onClick={(ev)=> ev.stopPropagation()}
@@ -150,7 +150,7 @@ function Products(props){
                       <MenuItem value={1}>1</MenuItem>
                       <MenuItem value={2}>2</MenuItem>
                       <MenuItem value={3}>3</MenuItem>
-                  </Select> */}
+                  </Select>
                 </CardActions>
               </Card>
               <Box style={{padding:"15px", }}>

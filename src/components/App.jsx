@@ -78,6 +78,25 @@ const getCartByUserId = async (userId) =>{
   }
 }
 
+const handlleGoToCart = async() =>{
+        
+  try{
+
+      console.log("This is the user id", user.id)
+      const result = await fetchCartByUserId(user.id)
+      console.log("This is the cart", result)
+      if(result.cart){
+          setCart(result.cart)
+          console.log(result.cart)
+          navigate(`/cart/${user.id}`)
+      }else{
+          alert("You do not have a cart")
+      }
+  }catch(err){
+      console.error("There was an error getting the users cart", err)
+  }
+}
+
 useEffect(() =>{
     tokenCheck();
   }, [])
@@ -126,6 +145,7 @@ useEffect(() =>{
       isAdmin={isAdmin}
       setToken={setToken}
       setIsLoggedIn={setIsLoggedIn}
+      handlleGoToCart={handlleGoToCart}
       isLoggedIn={isLoggedIn}
       navigate ={navigate}
       user={user}
@@ -155,6 +175,7 @@ useEffect(() =>{
         setPasswordError={setPasswordError}
         />}
         />
+
         <Route
         path="/login"
         element={<Login
@@ -170,6 +191,7 @@ useEffect(() =>{
         setIsAdmin={setIsAdmin}
         />}
         />
+
         <Route
         path='/'
         element={<Products
@@ -199,6 +221,7 @@ useEffect(() =>{
         isLoggedIn={isLoggedIn}
         />}
         />
+
         <Route
         path="/single-product/:productId"
         element={<SingleProduct
@@ -207,6 +230,7 @@ useEffect(() =>{
         setSingleProduct={setSingleProduct}
         />}
         />
+
         <Route
         path="/create-product"
         element={<CreateProduct
@@ -222,17 +246,21 @@ useEffect(() =>{
         setCategory={setCategory}
         category={category}
         />}/>
+
         <Route
         path='/cart/:id'
         element={<Cart
         cart={cart}
         setCart={setCart}
         products={products}
+        singleProduct={singleProduct}
+        handlleGoToCart={handlleGoToCart}
         setProducts={setProducts}
         navigate={navigate}
         user={user}
         />}
         />
+
         <Route
         path='check-out'
         element={<CheckOut
@@ -241,6 +269,7 @@ useEffect(() =>{
         />}
         />
       </Routes>
+
       <Box  component="footer">
       
       <Typography
