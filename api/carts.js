@@ -9,7 +9,8 @@ const {
         createCartInventory,
         addItemToCart,
         getUserAndCart,
-        deleteCartByUserId
+        deleteCartByUserId,
+        deleteCart,
      } = require("../db");
 
 cartsRouter.use(express.json());
@@ -115,21 +116,21 @@ cartsRouter.get("/userandcart/:userId", async (req, res, next) => {
 });
 
 //================DELETER CART BY USER ID===============
-cartsRouter.delete("/deletecart/:userId", async (req, res, next) => {
-    console.log("DELETE CART ROUTE")
-    const {userId} = req.params;
-    try{
-        const cart = await deleteCartByUserId(userId);
-        res.send({
-            cart,
-            message: "Cart Deleted"
-        })
-    }catch(err){
-        console.error('ERROR DELETING CART!!!!', err);
+// cartsRouter.delete("/deletecart/:userId", async (req, res, next) => {
+//     console.log("DELETE CART ROUTE")
+//     const {userId} = req.params;
+//     try{
+//         const cart = await deleteCartByUserId(userId);
+//         res.send({
+//             cart,
+//             message: "Cart Deleted"
+//         })
+//     }catch(err){
+//         console.error('ERROR DELETING CART!!!!', err);
 
-    }
-    next();
-});
+//     }
+//     next();
+// });
 
 //================UPDATE CART==================
 cartsRouter.patch("/updatecart/:cartId", async (req, res, next) => {
@@ -158,6 +159,24 @@ cartsRouter.patch("/updatecart/:cartId", async (req, res, next) => {
     }
     next();
 });
+
+//================DELETE CART BY ID==================
+cartsRouter.delete("/deletecart/:cartId", async (req, res, next) => {
+    console.log("DELETE CART ROUTE")
+    const {cartId} = req.params;
+    try{
+        const cart = await deleteCart(cartId);
+        res.send({
+            cart,
+            message: "Cart Deleted"
+        })
+    }catch(err){
+        console.error('ERROR DELETING CART!!!!', err);
+
+    }
+    next();
+});
+
 
 
 
