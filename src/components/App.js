@@ -197,6 +197,7 @@ useEffect(() =>{
         setProductPrice={setProductPrice}
         setProductDescription={setProductDescription}
         isLoggedIn={isLoggedIn}
+        isAdmin={isAdmin}
         />}
         />
         <Route

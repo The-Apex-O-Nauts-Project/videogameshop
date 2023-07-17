@@ -80,9 +80,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
             </Button>
             {showOrderConfirmation && (
             <Typography variant='h5'>
-                Thank you for your order. Your order number is #2001539. 
-                We have emailed your order confirmation, 
-                and will send you an update when your order has shipped.
+                Thank you for your order.
+                We have emailed your order confirmation.
             </Typography>  
             )}
         </Grid>
