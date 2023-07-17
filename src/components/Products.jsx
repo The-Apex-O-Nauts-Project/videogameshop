@@ -13,27 +13,37 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import SingleProduct from "./SingleProduct";
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 import { getAddToCart } from "../axios-services/cart";
+import { CoPresentOutlined } from "@mui/icons-material";
 
 
 function Products(props){
     const {
-        user,
-        setSingleProduct,
-        setProducts,
-        products,
-        navigate,
-        setCartUserId,
-        setProductId,
-        quantity,
-        total,
-        cartUserId,
-        productId,
-        setQuantity,
-        setTotal,
-        currentPage,
-        setCurrentPage
+      user,
+      cart,
+      setCart,
+      setProducts,
+      products,
+      navigate,
+      setSingleProduct,
+      setProductName,
+      productName,
+      productPrice,
+      productDescription,
+      setProductPrice,
+      setProductDescription,
+      getCartByUserId,
+      setCartUserId,
+      setProductId,
+      quantity,
+      cartUserId,
+      productId,
+      setQuantity,
+      currentPage,
+      setCurrentPage,
+      isLoggedIn
     } = props
     const productsPerPage= 6;
    
@@ -57,12 +67,27 @@ function Products(props){
 
     }
     
-    async function handleAddToCart(){
-
-      console.log("This is the user id", user.id)
-      const results = await getAddToCart(cartUserId, productId)
-      //console.log(results)
+    async function handleAddToCart() {
+      console.log("This is the user",user.id)
+      try {
+        const result = await getAddToCart(
+          productName,
+          productPrice,
+          productDescription,
+          quantity,
+          user.id, 
+          productId
+        );
+      //  setCart(result)
+       
+      } catch (error) {
+        console.error("An error occurred while adding product to cart:", error);
+      }
     }
+    const handleQuantityChange = (ev) =>{
+      setQuantity(ev.target.value)
+    }
+    
 
     const indexOfLastProduct = currentPage * productsPerPage;
     const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
@@ -117,8 +142,16 @@ function Products(props){
                   </Typography>
                 </CardContent>
                 <CardActions>
+                  {/* <Typography>Quantity</Typography>
+                  <Select value={quantity} 
+                  onChange={handleQuantityChange} sx={{ mr: 1 }}
+                  onClick={(ev)=> ev.stopPropagation()}
+                  >
+                      <MenuItem value={1}>1</MenuItem>
+                      <MenuItem value={2}>2</MenuItem>
+                      <MenuItem value={3}>3</MenuItem>
+                  </Select> */}
                 </CardActions>
-                      
               </Card>
               <Box style={{padding:"15px", }}>
               <Button size="small"  type="submit"  variant="contained" 
@@ -126,8 +159,16 @@ function Products(props){
               background:"rgb(107,118,86)", 
               '&:hover': {boxShadow: '0 10px 10px rgba(0, 0, 0, 1)', 
               marginTop: '-10px',}
-              }}
-              onClick={()=>{handleAddToCart(), setCartUserId(user.id), setProductId(product.id)}} 
+            }}
+              onClick={()=>{
+                handleAddToCart(), 
+                setCartUserId(user.id), 
+                setProductId(product.id),
+                setProductName(product.name),
+                setProductPrice(product.price),
+                setProductDescription(product.description)
+                //setQuantity(product.quantity)
+              }} 
               startIcon={<AddShoppingCartIcon/>}>Add to cart</Button>
               </Box>
         </Grid>
@@ -142,9 +183,12 @@ function Products(props){
                 <Button key={index}
                 onClick={()=> paginate(index+1)}
                 variant={currentPage === index + 1 ? "contained" : "outlined"}
-                style={{margin: "0 5px",
-                background:"rgb(107,118,86)", 
-                boxShadow: '0 2px 4px rgba(0, 0, 0, 1)'}}>
+                style={{
+                  textDecoration:"none", 
+                  color:"white",
+                  margin: "0 5px",
+                  background:"rgb(107,118,86)", 
+                  boxShadow: '0 2px 4px rgba(0, 0, 0, 1)'}}>
                   {index + 1}
                 </Button>
               ))}

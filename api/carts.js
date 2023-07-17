@@ -64,9 +64,9 @@ cartsRouter.get("/user/:userId", async (req, res, next) => {
 //================CREATE CART===============
 cartsRouter.post("/createcart", async (req, res, next) => {
     console.log("CREATE CART ROUTE")
-    const {quantity, total, cartUserId, productsId} = req.body;
+    const {quantity, cartUserId, productsId} = req.body;
     try{
-        const cart = await createCartInventory({quantity, total, cartUserId, productsId});
+        const cart = await createCartInventory({quantity, cartUserId, productsId});
         res.send({
             cart,
             message: "Cart Created"
@@ -81,19 +81,20 @@ cartsRouter.post("/createcart", async (req, res, next) => {
 //================ADD TO CART===============
 cartsRouter.post("/addtocart", async (req, res, next) => {
     console.log("ADD TO CART ROUTE")
-    const {quantity, total, cartUserId, productsId} = req.body;
+    const {productname, productdescription, productprice, quantity, total,cartOwnerId, productId} = req.body;
     try{
-        const cart = await addItemToCart({quantity, total, cartUserId, productsId});
+        const cart = await addItemToCart({ productname, productdescription, productprice, quantity, total,cartOwnerId, productId});
         res.send({
             cart,
-            message: "Cart Updated"
+            message: "Product Added to Cart"
         })
     }catch(err){
-        console.error('ERROR ADDING ITEM TO CART!!!!', err);
+        console.error('ERROR ADDING A PRODUCT TO CART!!!!', err);
 
     }
     next();
 });
+
 
 //================GET USER AND CART OR CHECK OUT?===============
 cartsRouter.get("/userandcart/:userId", async (req, res, next) => {
@@ -134,13 +135,10 @@ cartsRouter.delete("/deletecart/:userId", async (req, res, next) => {
 cartsRouter.patch("/updatecart/:cartId", async (req, res, next) => {
     console.log("UPDATE CART ROUTE")
     const {cartId} = req.params;
-    const {quantity, total, cartUserId, productsId} = req.body;
+    const {quantity, cartUserId, productsId} = req.body;
     const updateFields = {};
     if (quantity) {
         updateFields.quantity = quantity;
-    }
-    if (total) {
-        updateFields.total = total;
     }
     if (cartUserId) {
         updateFields.cartUserId = cartUserId;

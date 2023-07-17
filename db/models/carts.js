@@ -4,13 +4,13 @@ const client = require("../client")
 //==================CREATE CART=================
 
   const createCartInventory = async (cartItem) => {
-    const { quantity, total, cartUserId, productsId } = cartItem;
+    const {cartOwnerId, productId, productname, productdescription, productprice, quantity} = cartItem;
     try{
         const {rows: cartItem} = await client.query(`
-        INSERT INTO cart (quantity, total, "cartUserId", "productsId")
-        VALUES ($1, $2, $3, $4)
+        INSERT INTO cart ("cartOwnerId", "productId",productname, productdescription, productprice,  quantity)
+        VALUES ($1, $2, $3, $4, $5, $6)
         RETURNING *;
-        ` ,[quantity, total, cartUserId, productsId]);
+        ` ,[cartOwnerId, productId, productname, productdescription, productprice, quantity]);
         
       console.log(cartItem);
         return cartItem;
@@ -24,19 +24,21 @@ const client = require("../client")
 //==================ADD ITEM TO CART=================
 
   const addItemToCart = async (cartItem) =>{
-    const {cartUserId, productsId, quantity, total} = cartItem;
-    try {
-      await client.query(`
-          INSERT INTO cart  "cartUserId", "productsId")
-          VALUES ($1, $2, $3, $4)
-          RETURNING*;
-      `, [quantity,total,cartUserId,productsId]);
-      console.log(cartItem)
-      return cartItem
-    } catch (err) {
-    console.log('ERROR ADDING ITEM TO CART!!!!');
-    console.error(err)
+    const { productname, productdescription, productprice, quantity, cartOwnerId, productId } = cartItem;
+    try{
+        const {rows: cartItem} = await client.query(`
+        INSERT INTO cart ( productname, productdescription, productprice,  quantity,"cartOwnerId", "productId")
+        VALUES ($1, $2, $3, $4, $5, $6)
+        RETURNING *;
+        ` ,[ productname, productdescription, productprice, quantity, cartOwnerId, productId]);
+        
+      console.log(cartItem);
+        return cartItem;
+    }catch (err) {
+        console.log('ERROR Adding Cart Item!!!!');
+       console.error(err)
     }
+   
   };
 
    //==================GET USER AND CART CHECK OUT ????=================
@@ -46,7 +48,7 @@ const client = require("../client")
       const { rows } = await client.query(`
       SELECT users.id AS "CartOwner" , cart.id AS "Cart", cart.quantity AS " CartQuantity"
       FROM cart
-      INNER JOIN users ON cart."cartUserId" = users.id
+      INNER JOIN users ON cart."cartOwnerId" = users.id
       WHERE users.id =$1;
       `, [userId]);
     
@@ -78,16 +80,16 @@ const client = require("../client")
 
   const getCartByUserId = async (userId) => {
     try{
-      const { rows:  cart  } = await client.query(`
+      const {rows: cart}= await client.query(`
       SELECT *
       FROM cart
-      WHERE "cartUserId" = $1;
+      WHERE "cartOwnerId" = $1;
     `, [userId]);
 
       return cart;
     }catch(ex){
       console.error('ERROR GETTING Cart by User Id!!!');
-     console.error(err);
+    //  console.error(err);
     }   
   };
 
@@ -95,7 +97,7 @@ const client = require("../client")
 
   const getAllCarts = async () => {
     try{
-      const { rows: [ cart ] } = await client.query(`
+      const { rows: cart } = await client.query(`
       SELECT *
       FROM cart;
     `);
@@ -130,7 +132,7 @@ const client = require("../client")
       const { rows: [ cart ] } = await client.query(`
       DELETE *
       FROM cart
-      WHERE "cartOwnerId" = $1;
+      WHERE "cartUserId" = $1;
     `, [userId]);
 
     return cart;

@@ -1,5 +1,5 @@
 const BASE_URL = `http://localhost:3000/api/`
-import {useParams} from "react-router"
+
 
 //========GET ALL PRODUCTS=============
 export const fetchAllProducts = async() =>{
@@ -32,7 +32,8 @@ export const createProduct = async(product)=>{
                 description: product.description,
                 price:product.price,
                 photourl:product.photourl,
-                category:product.category
+                category:product.category,
+                isPurchase:product.isPurchase
             })
         });
         const result = await response.json();

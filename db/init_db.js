@@ -56,15 +56,18 @@ async function createTables() {
         description TEXT NOT NULL,
         price INTEGER,
         photourl TEXT NOT NULL,
-        category TEXT NOT NULL
+        category TEXT NOT NULL,
+        isPurchased BOOLEAN
         );
         
         CREATE TABLE cart (
         id SERIAL PRIMARY KEY,
         quantity INTEGER,
-        total INTEGER,
-        "cartUserId" INTEGER REFERENCES users(id),
-        "productsId" INTEGER REFERENCES products(id)
+        "cartOwnerId" INTEGER REFERENCES users(id),
+        "productId" INTEGER REFERENCES products(id),
+        productname VARCHAR(255),
+        productdescription TEXT,
+        productprice INTEGER
       
         );
      
@@ -192,31 +195,13 @@ async function rebuildDB() {
     await createTables()
     await createInitialUsers()
     await createInitialProducts()
-    await createInitialCarts()
-    await createInitialCartItem()
-
-
-   await addItemToCart(1,3,2,2)
-    await addItemToCart(3,4,1,3)
-    await addItemToCart(1,3,2,1)
-    await addItemToCart(1,4,2,1)
-    await addItemToCart(1,3,2,2)
-
-    const cartUser = await getUserAndCart();
-    console.log("cartuser", cartUser)
-
-    const getAUSER = await getAllUsers();
-    console.log("getAUSER", getAUSER);
-
-    const getAUSERBYID = await getUserById(1);
-    console.log("getAUSERBYID", getAUSERBYID);
-
-    const getProdId = await getAllProductById(1);
-    console.log("getProdId", getProdId);
-
-    const getProdName = await getAllProductByName("Destiny 2");
-    console.log("getProdName", getProdName);
-
+    // await createInitialCarts()
+    // await createInitialCartItem()
+    // await addItemToCart(1,3,2,2)
+    // await addItemToCart(3,4,1,3)
+    // await addItemToCart(1,3,2,1)
+    // await addItemToCart(1,4,2,1)
+    // await addItemToCart(1,3,2,2)
 
 
   } catch (error) {
