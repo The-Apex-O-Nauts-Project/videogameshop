@@ -8,7 +8,8 @@ import {
   Products,
   CreateProduct,
   SingleProduct,
-  Cart
+  Cart,
+  CheckOut
 } from "./index"
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -18,6 +19,7 @@ import Box from '@mui/material/Box';
 
 import '../style/App.css';
 import { getUser } from '../axios-services/users';
+import { fetchCartByUserId } from '../axios-services/cart';
 
 
 const App = () => {
@@ -45,6 +47,10 @@ const App = () => {
   const [cartId, setCartId] = useState("")
   const [quantity, setQuantity] = useState("")
   const [cart, setCart] = useState([])
+  const [productName, setProductName] = useState([]);
+  const [productPrice, setProductPrice] = useState([]);
+  const [productDescription, setProductDescription] = useState([]);
+  const [showOrderConfirmation, setShowOrderConfirmation] = useState(false);
   const navigate = useNavigate()
 
 const getCurrentUser = async (token)=>{
@@ -58,6 +64,17 @@ const getCurrentUser = async (token)=>{
 
   }catch(err){
     console.error("Problem at get User in App!", err)
+  }
+}
+const getCartByUserId = async (userId) =>{
+  try{
+    const result = await fetchCartByUserId(userId)
+    console.log("This is the cart", result)
+    setCart(result)
+
+
+  }catch(err){
+    console.error("Problem getting users cart")
   }
 }
 
@@ -112,7 +129,8 @@ useEffect(() =>{
       isLoggedIn={isLoggedIn}
       navigate ={navigate}
       user={user}
-      setCartUserId={setCartUserId}
+      cart={cart}
+      setCart={setCart}
     />
     <>
       <Routes>
@@ -156,6 +174,10 @@ useEffect(() =>{
         path='/'
         element={<Products
         user={user}
+        setCart={setCart}
+        productName={productName}
+        productPrice={productPrice}
+        productDescription={productDescription}
         singleProduct={singleProduct}
         setSingleProduct={setSingleProduct}
         setProducts={setProducts}
@@ -171,7 +193,10 @@ useEffect(() =>{
         setTotal={setTotal}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
-        
+        setProductName={setProductName}
+        setProductPrice={setProductPrice}
+        setProductDescription={setProductDescription}
+        isLoggedIn={isLoggedIn}
         />}
         />
         <Route
@@ -198,13 +223,20 @@ useEffect(() =>{
         category={category}
         />}/>
         <Route
-        path='/userandcart/:userId'
+        path='/cart/:id'
         element={<Cart
         cart={cart}
         setCart={setCart}
         products={products}
         setProducts={setProducts}
         user={user}
+        />}
+        />
+        <Route
+        path='check-out'
+        element={<CheckOut
+        showOrderConfirmation={showOrderConfirmation} 
+        setShowOrderConfirmation={setShowOrderConfirmation}
         />}
         />
       </Routes>

@@ -35,8 +35,8 @@ function CreateProduct(props){
                 setPrice()
                 setPhotoUrl("")
                 setCategory("")
+                navigate("/")
             }
-            navigate("/")
 
         }catch(err){
             console.error("There was an Error creating a product")
