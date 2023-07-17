@@ -1,6 +1,6 @@
 import React, {useEffect} from "react"
 import { Link, useParams } from "react-router-dom"
-import {fetchCartByUserId } from "../axios-services/cart"
+import {destroyCart, fetchCartByUserId } from "../axios-services/cart"
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
@@ -19,6 +19,7 @@ const Cart = (props) => {
       setCart,
       products,
       setProducts,
+      navigate,
       user,
     
   } = props;
@@ -33,10 +34,18 @@ const calculateTotal = () => {
   });
   return total;
 };
-const handleDeleteItem = (ev, productId) =>{
-  ev.preventDefault();
-  const updatedCart = cart.filter((item) => item.productId !== productId)
-  setCart(updatedCart)
+const handleDeleteItem = async (ev) =>{
+  console.log("This is the event", ev)
+  try{
+  const result = await destroyCart(ev)
+ // navigate(`/cart/${user.id}`)
+
+  // ev.preventDefault();
+  // const updatedCart = cart.filter((item) => item.productId !== productId)
+  // setCart(updatedCart)
+}catch(err){
+  console.error("There was an error deleting the item", err);
+}
 }
 
 return(
@@ -64,7 +73,9 @@ return(
                   background:"rgb(107, 118, 86)",
                   boxShadow:"0 2px 4px rgba(0, 0, 0, 1)",
                 }}
-                onClick={(ev) =>  handleDeleteItem(ev, cartuser.productId)}
+                onClick={()=>{handleDeleteItem(cartuser.id)
+                navigate(`/cart/${user.id}`)}}
+              
                 startIcon={<RemoveShoppingCartIcon/>}>
         
                 </Button>

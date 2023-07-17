@@ -229,6 +229,7 @@ useEffect(() =>{
         setCart={setCart}
         products={products}
         setProducts={setProducts}
+        navigate={navigate}
         user={user}
         />}
         />
