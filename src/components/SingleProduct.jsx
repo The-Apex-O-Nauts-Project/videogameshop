@@ -3,20 +3,40 @@ import { Container, Typography } from "@mui/material";
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { getAddToCart } from "../axios-services/cart"
 
 function SingleProduct(props) {
-const {navigate, singleProduct, setSingleProduct} = props    
+const {navigate,
+    singleProduct, 
+    setSingleProduct, 
+    user, 
+    productName,
+    setProductName,
+    setCartUserId,
+    cartUserId,
+    productPrice,
+    setProductPrice,
+    productDescription, 
+    setProductDescription,
+    productId,
+    setProductId
+} = props    
 
 async function handleAddToCart() {
   console.log("This is the user",user.id)
+ 
+  console.log(productName)
+  console.log(productPrice)
+  console.log(productDescription)
   try {
     const result = await getAddToCart(
       productName,
       productPrice,
-      productDescription,
-      quantity,
-      user.id, 
+      productDescription, 
+      user.id,
       productId
+      
+    
     );
   //  setCart(result)
    
@@ -44,7 +64,7 @@ return (
     <Typography variant="h5">Game Description: {singleProduct.description}</Typography>
     <Box sx={{  display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <Typography variant="h5" component="span" sx={{ mr: 2 }}>Price: ${singleProduct.price}</Typography>
-      <Typography variant="h5" component="span">Category: {singleProduct.category.slice(1,-1).replace(/"/g, '')}</Typography>
+      <Typography variant="h5" component="span">Category: {singleProduct.category}</Typography>
     </Box>
     <Box component="form" onSubmit={handleAddToCart} noValidate sx={{ mt: 3 }}>
       <Button
@@ -58,14 +78,14 @@ return (
         backgroundColor: 'rgb(107, 118, 86, 0.8)', marginTop: '-10px',}
         }}
         startIcon={<AddShoppingCartIcon />}
-        onClick={()=>{
+        onClick={(ev)=>{
+          ev.preventDefault()
           handleAddToCart(), 
           setCartUserId(user.id), 
-          setProductId(product.id),
-          setProductName(product.name),
-          setProductPrice(product.price),
-          setProductDescription(product.description)
-        }}>
+          setProductName(singleProduct.name),
+          setProductPrice(singleProduct.price),
+          setProductDescription(singleProduct.description),
+          setProductId(singleProduct.id)}}>
         Add To Cart
       </Button>
     </Box>

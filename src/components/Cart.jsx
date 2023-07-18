@@ -70,15 +70,16 @@ return(
               <Typography >${cartuser.productprice}</Typography>
               </span>
               <Typography>{cartuser.productdescription}</Typography>
-              <Typography>This is the Quantity: {cartuser.productquantity}</Typography>
               <Button
                 variant="contained"
                 style={{
                   background:"rgb(107, 118, 86)",
                   boxShadow:"0 2px 4px rgba(0, 0, 0, 1)",
                 }}
-                onClick={()=>{handleDeleteItem(cartuser.id);
-                  handlleGoToCart();
+                onClick={()=>{
+                handleDeleteItem(cartuser.id);
+                console.log("handlleGoToCart");
+                handlleGoToCart();
                 navigate(`/cart/${user.id}`)}}
                 startIcon={<RemoveShoppingCartIcon/>}>
                 </Button>

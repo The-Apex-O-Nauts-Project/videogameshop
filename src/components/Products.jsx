@@ -152,25 +152,29 @@ function Products(props){
                       <MenuItem value={3}>3</MenuItem>
                   </Select>
                 </CardActions>
-              </Card>
+              <CardActions>
+
               <Box style={{padding:"15px", }}>
               <Button size="small"  type="submit"  variant="contained" 
               style={{boxShadow: '0 2px 4px rgba(0, 0, 0, 1)', 
               background:"rgb(107,118,86)", 
               '&:hover': {boxShadow: '0 10px 10px rgba(0, 0, 0, 1)', 
               marginTop: '-10px',}
-            }}
-              onClick={()=>{
-                handleAddToCart(), 
-                setCartUserId(user.id), 
-                setProductId(product.id),
-                setProductName(product.name),
-                setProductPrice(product.price),
-                setProductDescription(product.description)
-                //setQuantity(product.quantity)
+              }}
+              onClick={(ev)=>{
+              ev.stopPropagation(),
+              handleAddToCart(), 
+              setCartUserId(user.id), 
+              setProductId(product.id),
+              setProductName(product.name),
+              setProductPrice(product.price),
+              setProductDescription(product.description)
+              //setQuantity(product.quantity)
               }} 
               startIcon={<AddShoppingCartIcon/>}>Add to cart</Button>
               </Box>
+            </CardActions>
+            </Card>
         </Grid>
           ))}
         </Grid>

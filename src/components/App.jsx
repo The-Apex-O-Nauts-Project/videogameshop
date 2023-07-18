@@ -226,8 +226,19 @@ useEffect(() =>{
         path="/single-product/:productId"
         element={<SingleProduct
         navigate={navigate}
+        user={user}
         singleProduct={singleProduct}
         setSingleProduct={setSingleProduct}
+        productName={productName} 
+        setProductName={setProductName}
+        cartUserId={cartUserId}
+        setCartUserId={setCartUserId}
+        productPrice={productPrice} 
+        setProductPrice={setProductPrice}
+        productDescription={productDescription} 
+        setProductDescription={setProductDescription}
+        productId={productId}
+        setProductId={setProductId}
         />}
         />
 
