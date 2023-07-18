@@ -10,7 +10,7 @@ const {
     getAllProductByName,
     updateProduct,
     deleteProduct,
-   
+    getProductByCat
 }= require("../db");
 
 
@@ -61,10 +61,24 @@ productsRouter.get("/:name", async (req, res, next) => {
         })  
     }catch(err){
         console.error('ERROR GETTING ALL PRODUCTS BY NAME!!!!', err);
-
+        res.status(500).send({ error: "Failed to fetch products" });
     }
     next();
 });
+productsRouter.get("/:category", async (req, res, next) =>{
+    const {category}= req.params;
+    try{
+        const products = await getProductByCat(category)
+        
+        res.send({
+            products,
+            message:"Product Found"
+        })
+    }catch(err){
+        console.error("THERE WAS AN ERROR GETTING PRODUCT", err)
+    }
+    next();
+})
 
 //================CREATE PRODUCT===============
 

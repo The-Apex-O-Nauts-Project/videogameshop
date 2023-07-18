@@ -1,8 +1,8 @@
-import React from "react"
+import React, {useEffect} from "react"
 import {Link} from "react-router-dom"
 import Button from '@mui/material/Button';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { fetchCartByUserId } from "../axios-services/cart";
+
 
 function Nav(props){
     const {
@@ -13,7 +13,6 @@ function Nav(props){
         navigate, 
         user,
         handlleGoToCart,
-       
         setCartUserId,
         setCart
     } = props
@@ -24,24 +23,7 @@ function Nav(props){
         window.localStorage.removeItem("token")
         navigate("/")
     }
-    // const handlleGoToCart = async() =>{
-        
-    //     try{
-
-    //         console.log("This is the user id", user.id)
-    //         const result = await fetchCartByUserId(user.id)
-    //         console.log("This is the cart", result)
-    //         if(result.cart){
-    //             setCart(result.cart)
-    //             console.log(result.cart)
-    //             navigate(`/cart/${user.id}`)
-    //         }else{
-    //             alert("You do not have a cart")
-    //         }
-    //     }catch(err){
-    //         console.error("There was an error getting the users cart", err)
-    //     }
-    // }
+   
     return(
         <nav className="nav-bar">
             {!isLoggedIn ?
@@ -77,6 +59,17 @@ function Nav(props){
                 <Link to="/" 
                 style={{textDecoration:"none", color:"white"}}>Store</Link>
             </Button> 
+            <Button
+            variant="contained"
+            style={{
+            boxShadow: '0 2px 4px rgba(0, 0, 0, 1)',
+            background: 'rgb(107, 118, 86)',
+            '&:hover': { boxShadow: '0 10px 10px rgba(0, 0, 0, 1)', backgroundColor: 'rgb(107, 118, 86, 0.8)', marginTop: '-10px' },
+            }}
+            onClick={() => filterProductsByCategory('shooter')} 
+            >
+            Shooter
+            </Button>
             </>
             :
             <>
@@ -104,7 +97,7 @@ function Nav(props){
             >
                 Cart
             </Button>
-           
+            
             
             <Button type="sumbit" variant="contained" onClick={logout} 
             style={{

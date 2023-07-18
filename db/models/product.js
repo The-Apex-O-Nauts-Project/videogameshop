@@ -58,20 +58,23 @@ async function getAllProductByName(name){
     }
 }
 //========Get Product By cat=====
-async function getProductByCat(category){
-  try{  
-    const{row: productCat} = await client.query(`
-    SELECT id, name, description, category
-    FROM products
-    WHERE category = $1;
-    `, [category])
+async function getProductByCat(category) {
+  try {
+    const { rows: productCat } = await client.query(
+      `
+      SELECT id, name, description, category
+      FROM products
+      WHERE category = $1;
+      `,
+      [category]
+    );
     return productCat;
-
-  }catch(err){
-    console.error("there was an error getting productByCat", err)
-    throw err
+  } catch (err) {
+    console.error("There was an error getting productByCat", err);
+    throw err;
   }
 }
+
 //========Update A Product========
 
 async function updateProduct({ id, ...fields }) {

@@ -151,6 +151,8 @@ useEffect(() =>{
       user={user}
       cart={cart}
       setCart={setCart}
+      products={products} 
+      setProducts={setProducts}
     />
     <>
       <Routes>
