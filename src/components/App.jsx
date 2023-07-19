@@ -277,6 +277,8 @@ useEffect(() =>{
         <Route
         path='check-out'
         element={<CheckOut
+        cart={cart}
+        handlleGoToCart={handlleGoToCart}
         showOrderConfirmation={showOrderConfirmation} 
         setShowOrderConfirmation={setShowOrderConfirmation}
         />}

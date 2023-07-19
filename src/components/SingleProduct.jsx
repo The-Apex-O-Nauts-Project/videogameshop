@@ -64,7 +64,7 @@ return (
     <Typography variant="h5">Game Description: {singleProduct.description}</Typography>
     <Box sx={{  display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <Typography variant="h5" component="span" sx={{ mr: 2 }}>Price: ${singleProduct.price}</Typography>
-      <Typography variant="h5" component="span">Category: {singleProduct.category}</Typography>
+      <Typography variant="h5" component="span">Category: {singleProduct.category.slice(1,-1).replace(/"/g, '')}</Typography>
     </Box>
     <Box component="form" onSubmit={handleAddToCart} noValidate sx={{ mt: 3 }}>
       <Button

@@ -53,6 +53,7 @@ const handleDeleteItem = async (ev) =>{
 }
 
 return(
+  
   <ThemeProvider theme={defaultTheme}>
     <CssBaseline/>
       <Container  sx={{ boxShadow: '0 2px 4px rgba(0, 0, 0, 1)', 
@@ -78,7 +79,6 @@ return(
                 }}
                 onClick={()=>{
                 handleDeleteItem(cartuser.id);
-                console.log("handlleGoToCart");
                 handlleGoToCart();
                 navigate(`/cart/${user.id}`)}}
                 startIcon={<RemoveShoppingCartIcon/>}>
@@ -101,6 +101,7 @@ return(
         </Paper>
     </Container>
 </ThemeProvider>
+
 )
    
 

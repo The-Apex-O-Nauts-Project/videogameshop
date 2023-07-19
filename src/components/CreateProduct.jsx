@@ -47,6 +47,7 @@ function CreateProduct(props){
         navigate("/")
     }
     return (
+     
         <ThemeProvider theme={defaultTheme}>
           <Container component="main" maxWidth="xs" style={{boxShadow: '0 2px 4px rgba(0, 0, 0, 1)', 
               background:"rgb(79,89,63)", 
@@ -143,6 +144,7 @@ function CreateProduct(props){
             </Box>
           </Container>
         </ThemeProvider>
+
       );
 }
 export default CreateProduct
