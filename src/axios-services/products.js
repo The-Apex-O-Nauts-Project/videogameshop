@@ -63,5 +63,22 @@ export const fetchProductsById= async (productId) => {
       
     }
   };
+
+  //UPDATE A PRODUCT
+  export const updateProduct = async (productId, productData) =>{
+    try{
+        const response = await fetch(`${BASE_URL}products/${productId}`, {
+            method:"PATCH",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify(productData)
+        })
+        const result = await response.json()
+        return result
+    }catch(err){
+        console.log("ERROR UPDATING PRODUCT", err)
+    }
+  }
   
   

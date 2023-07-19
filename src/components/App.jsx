@@ -221,6 +221,7 @@ useEffect(() =>{
         setProductPrice={setProductPrice}
         setProductDescription={setProductDescription}
         isLoggedIn={isLoggedIn}
+        isAdmin={isAdmin}
         />}
         />
 
@@ -241,6 +242,7 @@ useEffect(() =>{
         setProductDescription={setProductDescription}
         productId={productId}
         setProductId={setProductId}
+        isLoggedIn={isLoggedIn}
         />}
         />
 
@@ -271,6 +273,7 @@ useEffect(() =>{
         setProducts={setProducts}
         navigate={navigate}
         user={user}
+        setSingleProduct={setSingleProduct}
         />}
         />
 

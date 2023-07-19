@@ -28,7 +28,9 @@ function Register(props){
         setPasswordError,
         password
     }= props
+
     const defaultTheme = createTheme()
+
     async function handleSubmit(ev){
         ev.preventDefault()
         const user = {username, password, email}
@@ -45,13 +47,29 @@ function Register(props){
           setEmailError("Please Enter A Email")
           return 
         }
-        // if(!password || password.length < 8){
-        //     alert("Password is too short, it must be atleast 8 charaters")
-        //     return;
-        // }
+        if(!password || password.length < 8){
+            setPasswordError("Password is too short, it must be atleast 8 charaters")
+            return;
+        }
         console.log(user)
         const results = await register(user);
         console.log(results)
+
+        function isPasswordSafe(password){
+          const uppercaseRegex = /[A-Z]/;
+          const lowercaseRegex =/[a-z]/;
+          const numericRegex = /\d/;
+      
+          const hasUppercase = uppercaseRegex.test(password)
+          const hasLowercase = lowercaseRegex.test(password)
+          const hasNumeric = numericRegex.test(password)
+      
+          return hasUppercase && hasLowercase && hasNumeric
+        }
+        if(!isPasswordSafe(password)){
+          setPasswordError("Password must contain at least one uppercase letter, one lowercase letter, and one numeric digit.")
+          return;
+        }
 
         if(results && results.token){
             const token = results.token;
@@ -119,6 +137,8 @@ function Register(props){
                   type="password"
                   id="password"
                   onChange={(ev)=> setPassword(ev.target.value)}
+                  error={Boolean(passwordError)}
+                  helperText={passwordError}
                 />
                 <Button
                   type="submit"

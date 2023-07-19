@@ -28,6 +28,17 @@ function Nav(props){
         <nav className="nav-bar">
             {!isLoggedIn ?
             <>
+            <Button variant="contained"style={{
+                boxShadow: '0 2px 4px rgba(0, 0, 0, 1)', 
+                background:"rgb(107,118,86)", 
+                '&:hover': {boxShadow: '0 10px 10px rgba(0, 0, 0, 1)', 
+                backgroundColor: 'rgb(107, 118, 86, 0.8)', marginTop: '-10px',}
+                }}>
+                <Link to="/" 
+                style={{textDecoration:"none", color:"white"}}>
+                    Store
+                </Link>
+            </Button> 
             <Button variant="contained" style={{
                 boxShadow: '0 2px 4px rgba(0, 0, 0, 1)', 
                 background:"rgb(107,118,86)", 
@@ -50,26 +61,6 @@ function Nav(props){
                 style={{textDecoration:"none", color:"white"}}>Login</Link>
             </Button>
            
-            <Button variant="contained"style={{
-                boxShadow: '0 2px 4px rgba(0, 0, 0, 1)', 
-                background:"rgb(107,118,86)", 
-                '&:hover': {boxShadow: '0 10px 10px rgba(0, 0, 0, 1)', 
-                backgroundColor: 'rgb(107, 118, 86, 0.8)', marginTop: '-10px',}
-              }}>
-                <Link to="/" 
-                style={{textDecoration:"none", color:"white"}}>Store</Link>
-            </Button> 
-            <Button
-            variant="contained"
-            style={{
-            boxShadow: '0 2px 4px rgba(0, 0, 0, 1)',
-            background: 'rgb(107, 118, 86)',
-            '&:hover': { boxShadow: '0 10px 10px rgba(0, 0, 0, 1)', backgroundColor: 'rgb(107, 118, 86, 0.8)', marginTop: '-10px' },
-            }}
-            onClick={() => filterProductsByCategory('shooter')} 
-            >
-            Shooter
-            </Button>
             </>
             :
             <>

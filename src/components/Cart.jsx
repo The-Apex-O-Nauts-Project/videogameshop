@@ -22,7 +22,6 @@ const Cart = (props) => {
       handlleGoToCart,
       navigate,
       user,
-    
   } = props;
   const defaultTheme = createTheme()
 

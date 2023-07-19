@@ -19,7 +19,8 @@ const {navigate,
     productDescription, 
     setProductDescription,
     productId,
-    setProductId
+    setProductId,
+    isLoggedIn
 } = props    
 
 async function handleAddToCart() {
@@ -66,6 +67,7 @@ return (
       <Typography variant="h5" component="span" sx={{ mr: 2 }}>Price: ${singleProduct.price}</Typography>
       <Typography variant="h5" component="span">Category: {singleProduct.category.slice(1,-1).replace(/"/g, '')}</Typography>
     </Box>
+    {isLoggedIn &&
     <Box component="form" onSubmit={handleAddToCart} noValidate sx={{ mt: 3 }}>
       <Button
         type="submit"
@@ -76,19 +78,20 @@ return (
         background:"rgb(107,118,86)", 
         '&:hover': {boxShadow: '0 10px 10px rgba(0, 0, 0, 1)', 
         backgroundColor: 'rgb(107, 118, 86, 0.8)', marginTop: '-10px',}
-        }}
-        startIcon={<AddShoppingCartIcon />}
-        onClick={(ev)=>{
-          ev.preventDefault()
-          handleAddToCart(), 
-          setCartUserId(user.id), 
-          setProductName(singleProduct.name),
-          setProductPrice(singleProduct.price),
-          setProductDescription(singleProduct.description),
-          setProductId(singleProduct.id)}}>
+      }}
+      startIcon={<AddShoppingCartIcon />}
+      onClick={(ev)=>{
+        ev.preventDefault()
+        handleAddToCart(), 
+        setCartUserId(user.id), 
+        setProductName(singleProduct.name),
+        setProductPrice(singleProduct.price),
+        setProductDescription(singleProduct.description),
+        setProductId(singleProduct.id)}}>
         Add To Cart
       </Button>
     </Box>
+    }
   </Container>
   
 

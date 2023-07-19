@@ -10,6 +10,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Paper } from '@mui/material';
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 import {destroyCart} from "../axios-services/cart"
+import { FormatAlignJustifySharp } from '@mui/icons-material';
 
 
 function CheckOut(props) {
@@ -54,11 +55,14 @@ return (
           boxShadow: '0 2px 4px rgba(0, 0, 0, 1)',
           background: 'rgb(79, 89, 63)',
           borderRadius: '8px',
-          color: 'white'
+          color: 'white',
+         
         }}>
         {showOrderConfirmation ? (
             
-            <Typography variant="h5">
+            <Typography variant="h3" style={{
+                padding:"25px", 
+                height: '1200px',}}>
             Thank you for your order. Your order number is #2001539. We have emailed your order confirmation, and will
             send you an update when your order has shipped.
           </Typography>
@@ -157,7 +161,7 @@ return (
                   padding: '25px'
                 }}
                 >
-              <Typography variant="body2">Your Total: ${calculateTotal()}</Typography>
+              <Typography variant="body2">Total: ${calculateTotal()}</Typography>
             </Paper>
             <Button
               type="submit"
