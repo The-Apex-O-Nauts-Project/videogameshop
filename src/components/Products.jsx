@@ -139,7 +139,7 @@ function Products(props){
                     Price: ${product.price}
                   </Typography>
                   <Typography>
-                    {product.category.slice(1,-1).replace(/"/g, '')}
+                    {product.category}
                   </Typography>
                 </CardContent>
                 <CardActions>
